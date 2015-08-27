@@ -1,0 +1,10 @@
+<li class="box_l_h_c_li">
+								<input type="file" name="picpath" style="display:none;width:0px;">
+								<input type="button" value="上传照片" class="form-control btn btn-sm btn-info" onclick="document.addForm.picpath.click()">
+							</li>
+							<li class="box_l_h_c_li">
+								<label>预览:</label>
+								<div id="img-priview">
+									<img alt="" src="" id="userPic">
+								</div>
+							</li>
