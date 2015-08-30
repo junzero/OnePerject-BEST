@@ -1,0 +1,331 @@
+package com.sh.manage.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+
+
+
+@Entity
+@Table(name = "T_Member", schema = "SPLATFORM_DB")
+public class Member implements Serializable{
+	
+	private static final long serialVersionUID = 7488904616028381007L;
+	
+	@Id
+	@GeneratedValue(generator = "suserGenerator", strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "suserGenerator", strategy = "native")
+	@Column(name = "id", length = 8)
+	private Integer id;
+	/**
+	 * 邮箱
+	 */
+	@Column(name = "email", length = 100)
+	private String email;
+	
+	/**
+	 * 姓名
+	 */
+	@Column(name = "name", length = 20, nullable=false)
+	private String name;
+	
+	/**
+	 * 生日
+	 */
+	@Temporal(TemporalType.DATE)
+	@Column(name="birthday")
+	private Date birthday;
+	
+	/**
+	 * 性别
+	 */
+	@Column(name="sex", length=1)
+	private String sex;
+	
+	/**
+	 * 手机号码
+	 */
+	@Column(name="mobile", length=20)
+	private String mobile;
+	/**
+	 * 头像
+	 */
+	@Column(name="avatar", length=225)
+	private String avatar;
+	
+	/**
+	 * 固定电话
+	 */
+	@Column(name="phone", length=20)
+	private String phone;
+	
+	/**
+	 * 所在省
+	 */
+	@Column(name="province", length=10)
+	private String province;
+	
+	/**
+	 * 所在市
+	 */
+	@Column(name="city", length=10)
+	private String city;
+	
+	/**
+	 * 详细地址
+	 */
+	@Column(name="address", length=100)
+	private String address;
+	
+	/**
+	 * 所属门店
+	 */
+	@Column(name="group_id", length=8)
+	private String groupId;
+	
+	/**
+	 * 会员卡号
+	 */
+	@Column(name="card_num", length=20)
+	private String cardNum;
+	
+	/**
+	 * 办卡时间
+	 */
+	@Temporal(TemporalType.DATE)
+	@Column(name="card_created")
+	private Date cardCreated;
+	
+	/**
+	 * 卡有效期限
+	 */
+	@Temporal(TemporalType.DATE)
+	@Column(name="card_deadline")
+	private Date cardDeadline;
+	
+	/**
+	 * 卡密码
+	 */
+	@Column(name="card_password", length=8)
+	private String cardPassword;
+	/**
+	 * 会员等级 或者卡等级
+	 */
+	@Column(name="member_level", length=1)
+	private String memberLevel;
+	
+	/**
+	 * 积分
+	 */
+	@Column(name="point", length=8)
+	private String point;
+	
+	/**
+	 * 余额
+	 */
+	@Column(name="balance", length=10)
+	private BigDecimal balance;
+	
+	/**
+	 * 状态
+	 */
+	@Column(name="status", length=1)
+	private String status;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="created")
+	private Date created;
+	
+	
+	@Column(name="create_user")
+	private Integer createUser;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getCardNum() {
+		return cardNum;
+	}
+
+	public void setCardNum(String cardNum) {
+		this.cardNum = cardNum;
+	}
+
+	public Date getCardCreated() {
+		return cardCreated;
+	}
+
+	public void setCardCreated(Date cardCreated) {
+		this.cardCreated = cardCreated;
+	}
+
+	public Date getCardDeadline() {
+		return cardDeadline;
+	}
+
+	public void setCardDeadline(Date cardDeadline) {
+		this.cardDeadline = cardDeadline;
+	}
+
+	public String getCardPassword() {
+		return cardPassword;
+	}
+
+	public void setCardPassword(String cardPassword) {
+		this.cardPassword = cardPassword;
+	}
+
+	public String getMemberLevel() {
+		return memberLevel;
+	}
+
+	public void setMemberLevel(String memberLevel) {
+		this.memberLevel = memberLevel;
+	}
+
+	public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Integer getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(Integer createUser) {
+		this.createUser = createUser;
+	}
+	
+	
+}

@@ -1,10 +1,57 @@
-<li class="box_l_h_c_li">
-								<input type="file" name="picpath" style="display:none;width:0px;">
-								<input type="button" value="上传照片" class="form-control btn btn-sm btn-info" onclick="document.addForm.picpath.click()">
-							</li>
-							<li class="box_l_h_c_li">
-								<label>预览:yulan</label>
-								<div id="img-priview">
-									<img alt="" src="" id="userPic">
-								</div>
-							</li>
+1.新增会员管理模块
+--id 姓名  生日 性别  手机 头像  详细地址  email 固话 省  市    会员卡号 办卡时间 过期时间  卡密码  会员等级（折扣跟等级相挂钩吗）  积分  余额    所属门店  状态
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : vipm
+Source Server Version : 50626
+Source Host           : 127.0.0.1:3306
+Source Database       : splatform_db
+
+Target Server Type    : MYSQL
+Target Server Version : 50626
+File Encoding         : 65001
+
+Date: 2015-08-30 18:55:32
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for t_member
+-- ----------------------------
+DROP TABLE IF EXISTS `t_member`;
+CREATE TABLE `t_member` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '会员姓名',
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电子邮件',
+  `birthday` date DEFAULT NULL COMMENT '生日',
+  `sex` varchar(1) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '性别',
+  `mobile` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '手机号码',
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '头像',
+  `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '固话',
+  `province` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '省',
+  `city` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '市',
+  `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '地址',
+  `group_id` int(8) DEFAULT NULL,
+  `card_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '会员卡号',
+  `card_created` date DEFAULT NULL COMMENT '办卡日期',
+  `card_deadline` date DEFAULT NULL COMMENT '会员卡截止日期',
+  `card_password` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '卡密码',
+  `member_level` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '会员等级',
+  `point` int(8) DEFAULT NULL COMMENT '积分',
+  `balance` decimal(10,0) DEFAULT NULL COMMENT '余额',
+  `status` varchar(1) COLLATE utf8_unicode_ci NOT NULL COMMENT '会员状态',
+  `created` date NOT NULL,
+  `create_user` int(8) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of t_member
+-- ----------------------------
+INSERT INTO `t_member` VALUES ('1', 'zjyww', 'zjy9044@163.com', '2015-08-07', '0', '18059008864', null, null, null, null, '', null, '3334443344', '2015-08-13', '2015-08-27', '', '1', '0', '0', '0', '2015-08-30', null);
+INSERT INTO `t_member` VALUES ('2', '吴佳俊', 'zjyww@163.com', '1990-03-30', '0', '18059008843', null, null, null, null, '发广告', null, '3334443344344434', '2015-08-30', '2015-10-08', '123456', '2', '0', '0', '2', '2015-08-30', null);
+ 
+2.加入表单验证插件ValidForm 
+http://validform.rjboy.cn/
