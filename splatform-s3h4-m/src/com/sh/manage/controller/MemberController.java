@@ -34,15 +34,6 @@ import com.sh.manage.utils.WebUtils;
 @Controller
 public class MemberController {
 	private Logger logger = Logger.getLogger(MemberController.class);
-	
-	@InitBinder  
-	protected void initBinder(HttpServletRequest request,  
-	            ServletRequestDataBinder binder) throws Exception {   
-	      DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");  
-	      CustomDateEditor dateEditor = new CustomDateEditor(fmt, true);  
-	      binder.registerCustomEditor(Date.class, dateEditor);  
-	}
-	
 	@Autowired
 	private MemberService memberService;
 	

@@ -1,7 +1,6 @@
 package com.sh.manage.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -91,34 +90,9 @@ public class Member implements Serializable{
 	/**
 	 * 所属门店
 	 */
-	@Column(name="group_id", length=8)
-	private String groupId;
+	@Column(name="store_id", length=8)
+	private String storeId;
 	
-	/**
-	 * 会员卡号
-	 */
-	@Column(name="card_num", length=20)
-	private String cardNum;
-	
-	/**
-	 * 办卡时间
-	 */
-	@Temporal(TemporalType.DATE)
-	@Column(name="card_created")
-	private Date cardCreated;
-	
-	/**
-	 * 卡有效期限
-	 */
-	@Temporal(TemporalType.DATE)
-	@Column(name="card_deadline")
-	private Date cardDeadline;
-	
-	/**
-	 * 卡密码
-	 */
-	@Column(name="card_password", length=8)
-	private String cardPassword;
 	/**
 	 * 会员等级 或者卡等级
 	 */
@@ -131,11 +105,6 @@ public class Member implements Serializable{
 	@Column(name="point", length=8)
 	private String point;
 	
-	/**
-	 * 余额
-	 */
-	@Column(name="balance", length=10)
-	private BigDecimal balance;
 	
 	/**
 	 * 状态
@@ -143,13 +112,8 @@ public class Member implements Serializable{
 	@Column(name="status", length=1)
 	private String status;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="created")
-	private Date created;
-	
-	
-	@Column(name="create_user")
-	private Integer createUser;
+	private String created;
 	
 	public Integer getId() {
 		return id;
@@ -239,44 +203,12 @@ public class Member implements Serializable{
 		this.address = address;
 	}
 
-	public String getGroupId() {
-		return groupId;
+	public String getStoreId() {
+		return storeId;
 	}
 
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
-
-	public String getCardNum() {
-		return cardNum;
-	}
-
-	public void setCardNum(String cardNum) {
-		this.cardNum = cardNum;
-	}
-
-	public Date getCardCreated() {
-		return cardCreated;
-	}
-
-	public void setCardCreated(Date cardCreated) {
-		this.cardCreated = cardCreated;
-	}
-
-	public Date getCardDeadline() {
-		return cardDeadline;
-	}
-
-	public void setCardDeadline(Date cardDeadline) {
-		this.cardDeadline = cardDeadline;
-	}
-
-	public String getCardPassword() {
-		return cardPassword;
-	}
-
-	public void setCardPassword(String cardPassword) {
-		this.cardPassword = cardPassword;
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getMemberLevel() {
@@ -295,14 +227,6 @@ public class Member implements Serializable{
 		this.point = point;
 	}
 
-	public BigDecimal getBalance() {
-		return balance;
-	}
-
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -311,21 +235,13 @@ public class Member implements Serializable{
 		this.status = status;
 	}
 
-	public Date getCreated() {
+	public String getCreated() {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(String created) {
 		this.created = created;
 	}
 
-	public Integer getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(Integer createUser) {
-		this.createUser = createUser;
-	}
-	
 	
 }

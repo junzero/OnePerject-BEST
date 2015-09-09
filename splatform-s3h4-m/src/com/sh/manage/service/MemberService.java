@@ -3,20 +3,17 @@ package com.sh.manage.service;
 
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.manage.dao.MemberDao;
 import com.sh.manage.entity.Member;
-import com.sh.manage.exception.SPlatformServiceException;
 import com.sh.manage.module.page.Page;
 
 @Service
 public class MemberService extends BaseService{
 
-	private Logger logger = Logger.getLogger(MemberService.class);
-	
 	@Autowired
 	private MemberDao memberDao;
 	
@@ -32,7 +29,7 @@ public class MemberService extends BaseService{
 	}
 	
 	public void addMember(Member member){
-		member.setCreated(new Date());
+		member.setCreated(DateUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss") );
 		memberDao.save(member);
 	}
 	
@@ -41,16 +38,9 @@ public class MemberService extends BaseService{
 		if(oldMember != null){
 			oldMember.setAddress(member.getAddress());
 			oldMember.setAvatar(member.getAvatar());
-			oldMember.setBalance(member.getBalance());
 			oldMember.setBirthday(member.getBirthday());
-			oldMember.setCardCreated(member.getCardCreated());
-			oldMember.setCardDeadline(member.getCardDeadline());
-			oldMember.setCardNum(member.getCardNum());
-			oldMember.setCardPassword(member.getCardPassword());
 			oldMember.setCity(member.getCity());
-			oldMember.setCreateUser(member.getCreateUser());
 			oldMember.setEmail(member.getEmail());
-			oldMember.setGroupId(member.getGroupId());
 			oldMember.setMemberLevel(member.getMemberLevel());
 			oldMember.setMobile(member.getMobile());
 			oldMember.setName(member.getName());
