@@ -87,6 +87,7 @@
 				<value>com.sh.manage.entity.SysGroupRole</value>
 				<value>com.sh.manage.entity.SysRoleMenu</value>
 				<value>com.sh.manage.entity.Member</value>
+				<value>com.sh.manage.entity.Vipcard</value>
 			</list>
 		</property>
 	</bean>

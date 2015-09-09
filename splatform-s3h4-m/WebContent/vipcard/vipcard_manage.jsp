@@ -53,33 +53,19 @@
 		            		<div class="form-group">
 								<div class="">
 									<i class="icon-hand-right"></i><span>搜索</span> 
-									<input class="form-control" type="text" name="name" value="${name }" placeholder="输入会员名">
-									<input id="mobile" class="form-control"
-										type="text" name="mobile" value="${mobile }"
-										placeholder="手机号"> 
+									
 									<input id="cardNum" class="form-control" type="text" name="cardNum" value="${cardNum }"
 										placeholder="会员卡号"> 
-									<%-- <select id="auRoleId" name="auRoleId"
-										style="height: 33px; width: 120px; background: none repeat scroll 0 0 #f5f5f5 !important;"
-										class="form-control" id="form-field-select-3" data-placeholder="选择组织">
-										<option value="0">请选择组织</option>
-										<c:forEach items="${groupList}" var="role">
-											<option value="${group.id }"
-												onclick="setAuRoleId('${group.id }');" 
-												<c:if test="${group.id == groupId}">selected</c:if>	
-											>${group.groupName}
-											</option>
-										</c:forEach>
-									</select>  --%>
+								
 									<select id="status"
 										style="height: 33px; width: 80px; background: none repeat scroll 0 0 #f5f5f5 !important;"
 										class="form-control" id="form-field-select-3" name="status"
 										data-placeholder="">
 										<option value="" selected>全部</option>
-										<option value="0">正常</option>
-										<option value="1" onclick="setAuStatus('1');" <c:if test="${status == 1}">selected</c:if>>锁定</option>
-										<option value="2" onclick="setAuStatus('2');" <c:if test="${status == 2}">selected</c:if>>挂失</option>
-										<option value="3" onclick="setAuStatus('3');" <c:if test="${status == 3}">selected</c:if>>过期</option>
+										<option value="0">未开通</option>
+										<option value="1" onclick="setAuStatus('1');" <c:if test="${status == 1}">selected</c:if>>已开通</option>
+										<option value="2" onclick="setAuStatus('2');" <c:if test="${status == 2}">selected</c:if>>注销</option>
+										<option value="3" onclick="setAuStatus('3');" <c:if test="${status == 3}">selected</c:if>>挂失</option>
 									</select>
 									<button class="btn btn-default" type="button" onClick="submitSearchForm()">
 												<i class="icon-search"></i>
@@ -89,44 +75,39 @@
 							</div>
 						</form>
 				</div>
-                
-                
                         <div class="table-responsive">
 										<table id="sample-table-1"
 											class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
 													<th class="center">序号</th>
-													<th>姓名</th>
-													<th>手机号</th>
 													<th>会员卡号</th>
-													<th>办卡时间</th>
+													<th>绑定会员</th>
+													<th>开通日期</th>
 													<th>有效期</th>
-													<th>状态</th>
 													<th>操作</th>
 												</tr>
 											</thead>
 
 											<tbody>
-												<c:forEach items="${memberList}" var="member"
+												<c:forEach items="${vipcardList}" var="vipcard"
 													varStatus="status">
 													<tr>
-														<td>${member.id}</td>
-														<td>${member.name}</td>
-														<td>${member.mobile}</td>
-														<td>${member.cardNum}</td>
-														<td>${member.cardCreated}</td>
-														<td>${member.cardDeadline}</td>
+														<td>${vipcard.id}</td>
+														<td>${vipcard.cardNum}</td>
+														<td>${vipcard.memberName}</td>
+														<td>${vipcard.openTime}</td>
+														<td>${vipcard.cardDeadline}</td>
 														<td>
-															<c:if test="${member.status eq '0'}">正常</c:if>
-															<c:if test="${member.status eq '1'}">锁定</c:if>
-															<c:if test="${member.status eq '2'}">挂失</c:if>
-															<c:if test="${member.status eq '3'}">过期</c:if>														
+															<c:if test="${vipcard.status eq '0'}">未开通</c:if>
+															<c:if test="${vipcard.status eq '1'}">已开通</c:if>
+															<c:if test="${vipcard.status eq '2'}">注销</c:if>
+															<c:if test="${vipcard.status eq '3'}">挂失</c:if>														
 														</td>
 														<td>
-															<a data-toggle="modal" href="#auserEdit" title="编辑会员"
-																onClick="editMember('${member.id}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
-															<a data-toggle="modal" href="#auserDel" title="删除会员"  onClick="delMember('${member.id}','${member.name }');" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
+															<a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
+																onClick="editMember('${vipcard.id}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
+															<a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delMember('${vipcard.id}','${vipcard.memberId }');" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
 														</td>
 													</tr>
 												</c:forEach>
@@ -145,7 +126,7 @@
 								<!-- /row -->
 							<div
 								style="display: inline-block; background-repeat: no-repeat; border-width: 4px; font-size: 13px; line-height: 1.39; padding: 4px 9px;">
-								<a onclick="addmember();" href="javascript:;" class="btn btn-success btn-sm">添加</a>
+								<a onclick="addVipcard();" href="javascript:;" class="btn btn-success btn-sm">添加</a>
 							</div>
 							<div class="hr hr-18 dotted hr-double"></div>
                     </div>
@@ -184,12 +165,11 @@
     <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
     <script type="text/javascript">
 
-  	//组织新增
-    var addmember = function(){
+    var addVipcard = function(){
     		var diag = new zDialog();
     		diag.Height = 360;
     		diag.Width = 600;
-        	diag.Title = "系统管理-会员新增";
+        	diag.Title = "系统管理-会员卡新增";
         	diag.URL = "<%=path %>/toAddMember.do";
         	diag.OKEvent = function(){
         		//参数校验

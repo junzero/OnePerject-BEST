@@ -44,7 +44,8 @@ public class MemberDao extends AbstractBaseDao<Member>{
 	 */
 	public Page getAllMember(String name,String mobile,String cardNum,String status,int pageNo, int pageSize){
 		StringBuffer sbf = new StringBuffer();
-		sbf.append("select rt.* from (select s.id,s.avatar,s.birthday,s.email,s.name,s.address,s.mobile,s.card_num,s.card_created,s.card_deadline,s.status,s.sex,s.phone,s.province,s.city,s.group_id,s.card_password,s.member_level,s.point,s.balance,s.created,s.create_user from t_member s");
+		sbf.append("select rt.* from (select s.id,s.avatar,s.birthday,s.email,s.name,s.address,s.mobile,s.card_num,s.card_created,s.card_deadline,s.status,s.sex,s.phone,s.province,s.city,s.group_id,s.card_password,s.member_level,s.point,s.balance,s.created,s.create_user "
+				+ "from t_member s where 1=1");
 		
 		Object[] params = new Object[]{};
 		
@@ -69,6 +70,5 @@ public class MemberDao extends AbstractBaseDao<Member>{
 		sbf.append(") as rt");
 		
 		return this.queryModelListByPage(sbf.toString(), params, pageNo, pageSize, Member.class);
-		
 	}
 }
