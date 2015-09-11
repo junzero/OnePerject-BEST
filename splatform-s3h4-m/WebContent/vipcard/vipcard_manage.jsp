@@ -80,13 +80,12 @@
 											class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
-													<th class="center">序号</th>
+													<th class="center">操作</th>
 													<th>会员卡号</th>
 													<th>绑定会员</th>
 													<th>开通日期</th>
 													<th>有效期</th>
 													<th>状态</th>
-													<th>操作</th>
 												</tr>
 											</thead>
 
@@ -94,7 +93,21 @@
 												<c:forEach items="${vipcardList}" var="vipcard"
 													varStatus="status">
 													<tr>
-														<td>${vipcard.id}</td>
+														<td width="60">
+															<div class="btn-group">
+																<button type="button" class="btn btn-default dropdown-toggle"
+																	data-toggle="dropdown" aria-haspopup="true"
+																	aria-expanded="false">
+																	操作<span class="caret"></span>
+																</button>
+																<ul class="dropdown-menu">
+																	<li><a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
+																		onClick="editVipcard('${vipcard.cardNum}');">编辑</a></li>
+																	<li><a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delVipcard('${vipcard.cardNum}');">删除</a></li>
+																	
+																</ul>
+															</div>
+														</td>
 														<td>${vipcard.cardNum}</td>
 														<td>${vipcard.member.name}</td>
 														<td>${vipcard.openTime}</td>
@@ -105,11 +118,7 @@
 															<c:if test="${vipcard.status eq '2'}">注销</c:if>
 															<c:if test="${vipcard.status eq '3'}">挂失</c:if>														
 														</td>
-														<td>
-															<a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
-																onClick="editVipcard('${vipcard.cardNum}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
-															<a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delVipcard('${vipcard.cardNum}');" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
-														</td>
+						
 													</tr>
 												</c:forEach>
 
