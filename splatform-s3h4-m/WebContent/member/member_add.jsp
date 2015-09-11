@@ -5,6 +5,7 @@
 <!-- BEGIN HEAD -->
 <%@ include file="../main/header.jsp"%>
  <link rel="stylesheet" href="<%=hpath %>/static/css/validcss.css" />
+  <link rel="stylesheet" href="<%=hpath %>/static/js/select2/select2.min.css" />
 <style type="text/css">
 	
 	#wrap{
@@ -27,24 +28,7 @@
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-  						<label for="name">会员性别</label>
-  						<div style="height:34px;padding:6px 12px;">
-  							<input type="radio" name="sex" checked value="0"> 男
-  							<input type="radio" name="sex" value="1"> 女
-  						</div>
-  					</div>
-  				</div>	
-			</div>
-			<div class="row">
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="birthday">出生日期</label>
-    					<input id="birthday" class="form-control" type="text"
-									name="birthday" value="" placeholder="请输入出生日期" readonly>
-  					</div>
-  				</div>
+  				
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="mobile">手机号码</label>
@@ -53,6 +37,24 @@
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>	
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-md-6">
+  					<div class="form-group">
+  						<label for="name">会员性别</label>
+  						<div style="height:34px;padding:6px 12px;">
+  							<input type="radio" name="sex" checked value="0"> 男
+  							<input type="radio" name="sex" value="1"> 女
+  						</div>
+  					</div>
+  				</div>
+  				<div class="col-xs-6 col-md-6">
+  					<div class="form-group">
+    					<label for="birthday">出生日期</label>
+    					<input id="birthday" class="form-control" type="text"
+									name="birthday" value="" placeholder="请输入出生日期" readonly>
+  					</div>
+  				</div>
 			</div>
 			<div class="row">
   				<div class="col-xs-6 col-md-6">
@@ -65,85 +67,42 @@
   				</div>
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
-    					<label for="status">会员状态</label>
-    					<select class="form-control" name="status" id="status">
-    						<option value="0">正常</option>
-  							<option value="1">锁定</option>
-  							<option value="2">挂失</option>
-  							<option value="3">过期</option>
-						</select>
-  					</div>
-  				</div>	
-			</div>
-			<div class="row">
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="cardNum">会员卡号</label>
-    					<input id="cardNum" class="form-control" type="text" datatype="s6-20" nullmsg="会员卡号必填" errormsg="请输入6-20个字符"
-									name="cardNum" value="" placeholder="请输入会员卡号">
-						<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
-  					</div>
-  				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group" >
-    					<label for="memberLevel">会员等级</label>
-    					<select class="form-control" name="memberLevel" id="memberLevel">
-  							<option value="1">普通卡</option>
-  							<option value="2">白金卡</option>
-  							<option value="3">钻石卡</option>
-						</select>
-  					</div>
-  				</div>
-  			</div>
-  			<div class="row">
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
     					<label for="point">会员积分</label>
     					<input id="point" class="form-control" type="text" datatype="n1-8" nullmsg="请填写积分"
 									name="point" value="" placeholder="请输入会员积分">
 						<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="balance">卡内余额</label>
-    					<input type="text" class="form-control" id="balance" name="balance" datatype="/^[0-9]+(\.[0-9]{2})?$/i" nullmsg="金额必填" errormsg="请输入正确的金额"
-    					 placeholder="请输入卡内余额">
-    					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
-  					</div>
-  				</div>	
 			</div>
 			<div class="row">
+  				
   				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="cardCreated">办卡日期</label>
-    					<input id="cardCreated" class="form-control" type="text"
-									name="cardCreated" value="" placeholder="请输入办卡日期" readonly>
-						
+  					<div class="form-group" >
+    					<label for="memberLevel">会员等级</label>
+    					<select class="form-control" name="memberLevel" id="memberLevel">
+  							<option value="1">普通会员</option>
+  							<option value="2">钻石会员</option>
+  							<option value="3">皇冠会员</option>
+						</select>
   					</div>
   				</div>
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
-    					<label for="cardDeadline">有效日期</label>
-    					<input id="cardDeadline" class="form-control" type="text"
-									name="cardDeadline" value="" placeholder="请输入有效日期" readonly>
+    					<label for="address">绑定会员卡</label>
+    					<select class="remote-data form-control" id="cardNum" name="vipcards[0].cardNum">
+  							<option value="" selected="selected">请选择会员卡</option>
+						</select>
   					</div>
-  				</div>
+  				</div>	
   			</div>	
   			<div class="row">
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="cardPassword">会员卡密码</label>
-    					<input id="cardPassword" class="form-control" type="password"
-									name="cardPassword" value="" placeholder="会员卡密码">
-  					</div>
-  				</div>
-  				<div class="col-xs-6 col-md-6">
+  				<div class="col-xs-12 col-md-12">
   					<div class="form-group">
     					<label for="address">联系地址</label>
     					<input type="text" class="form-control" id="address" name="address" placeholder="请输入详细地址">
   					</div>
   				</div>	
+  				
 			</div>
 		</form>
 	</div>
@@ -153,13 +112,28 @@
 
 <script type="text/javascript"	src="<%=path %>/static/js/date-time/bootstrap-datepicker.js"></script>
 <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
+<script type="text/javascript"	src="<%=path %>/static/js/select2/select2.full.min.js"></script>
+<script type="text/javascript"	src="<%=path %>/static/js/select2/zh-CN.js"></script>
 <iframe name="targetFrame" style="width: 0%; display: none;"></iframe>
 <script type="text/javascript">
 				$('#birthday').datepicker({format:"yyyy-mm-dd"});
-				$('#cardCreated').datepicker({format:"yyyy-mm-dd"});
-				$('#cardDeadline').datepicker({format:"yyyy-mm-dd"});
 				var $form = null;
 				$(document).ready(function() {
+					$.ajax({  
+						type:'get',  
+						url:'unbindCards.do',  
+						data:{},  
+						cache:true,  
+						dataType:'json',  
+					    success:function(data){  
+							 $(data).each(function(index,item){
+								 $("#cardNum").append("<option value='"+item[1]+"'>"+item[1]+"</option>");
+								 $('.remote-data').select2({
+								});
+							 })
+						},  
+						error:function(){}  
+					}); 
 			 		$form = $('#addForm').Validform({tiptype:function(msg,o,cssctl){
 						//msg：提示信息;
 						//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;

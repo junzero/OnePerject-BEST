@@ -48,7 +48,7 @@
 	                <hr />
 	                <div class="page-header mr0">
 						<form id="aUserSearchForm" name="aUserSearchForm"
-							action="<spring:url value='/memberManager.do' htmlEscape='true'/>"
+							action="<spring:url value='/vipcardManager.do' htmlEscape='true'/>"
 							method="post" target="_self">
 		            		<div class="form-group">
 								<div class="">
@@ -85,6 +85,7 @@
 													<th>绑定会员</th>
 													<th>开通日期</th>
 													<th>有效期</th>
+													<th>状态</th>
 													<th>操作</th>
 												</tr>
 											</thead>
@@ -95,9 +96,9 @@
 													<tr>
 														<td>${vipcard.id}</td>
 														<td>${vipcard.cardNum}</td>
-														<td>${vipcard.memberName}</td>
+														<td>${vipcard.member.name}</td>
 														<td>${vipcard.openTime}</td>
-														<td>${vipcard.cardDeadline}</td>
+														<td>${vipcard.deadline}</td>
 														<td>
 															<c:if test="${vipcard.status eq '0'}">未开通</c:if>
 															<c:if test="${vipcard.status eq '1'}">已开通</c:if>
@@ -106,8 +107,8 @@
 														</td>
 														<td>
 															<a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
-																onClick="editMember('${vipcard.id}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
-															<a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delMember('${vipcard.id}','${vipcard.memberId }');" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
+																onClick="editVipcard('${vipcard.cardNum}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
+															<a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delVipcard('${vipcard.cardNum}');" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
 														</td>
 													</tr>
 												</c:forEach>
@@ -135,8 +136,6 @@
             </div>
         </div>
        <!--END PAGE CONTENT -->
-       
-       
        
 	</div>
     <!--END MAIN WRAPPER -->
@@ -170,7 +169,7 @@
     		diag.Height = 360;
     		diag.Width = 600;
         	diag.Title = "系统管理-会员卡新增";
-        	diag.URL = "<%=path %>/toAddMember.do";
+        	diag.URL = "<%=path %>/toAddVipcard.do";
         	diag.OKEvent = function(){
         		//参数校验
         		if(diag.innerWin.check()){
@@ -191,12 +190,12 @@
     }
     
     //在父页面提交iframe中的表单
-    var editMember = function(id){
+    var editVipcard = function(cardNum){
     		var diag = new zDialog();
     		diag.Height = 360;
     		diag.Width = 600;
-    		diag.Title = "系统管理-会员编辑";
-        	diag.URL = "<%=path %>/toEditMember.do?memberId="+id;
+    		diag.Title = "系统管理-会员卡编辑";
+        	diag.URL = "<%=path %>/toEditVipcard.do?cardNum="+cardNum;
         	diag.OKEvent = function(){
         		
         		//参数校验
@@ -219,9 +218,9 @@
     
     
     //组织删除
-    var delMember= function(id,groupName){
-    	$('#del_memberId').val(id);
-    	zDialog.confirm('警告：您确认要删除会员['+groupName+']吗？',function(){
+    var delVipcard= function(cardNum){
+    	$('#del_cardNum').val(cardNum);
+    	zDialog.confirm('警告：您确认要删除会员卡['+cardNum+']吗？',function(){
     		document.getElementById('delForm').submit();diag.close();
     	});
     }
@@ -231,12 +230,7 @@
 
 <iframe name="targetFrame" style="width: 0%; display: none;"></iframe>
 <script type="text/javascript">
-				$('#startDate').datepicker({format:"yyyy-mm-dd"});
-				$('#endDate').datepicker({format:"yyyy-mm-dd"});
-				$('#createDate').datepicker({format:"yyyy-mm-dd"});
-				$('#validDate').datepicker({format:"yyyy-mm-dd"});
-				$('#createDateEdit').datepicker({format:"yyyy-mm-dd"});
-				$('#validDateEdit').datepicker({format:"yyyy-mm-dd"});
+				
 				//提交搜索
 				var setAuRoleId = function(auRoleId){
 					document.getElementById("auRoleId").value=auRoleId;
@@ -249,8 +243,8 @@
 				}
 </script>    
 
-<form id="delForm" name="delForm" method="post" action="delMember.do" target="thisFrame">
-	<input type="hidden" id="del_memberId" name="memberId">
+<form id="delForm" name="delForm" method="post" action="delVipcard.do" target="thisFrame">
+	<input type="hidden" id="del_cardNum" name="cardNum">
 </form>
 <iframe style="display: none" name="thisFrame"></iframe>
 </html>

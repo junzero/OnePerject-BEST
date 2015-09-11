@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -74,26 +77,16 @@ public class Vipcard implements Serializable{
 	@Column(name="type", length=1)
 	private String type;
 
-	@Column(name="member_id", length=8)
-	private Integer memberId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "member_id", referencedColumnName = "id")  
+	private Member member;
 	
-	@Transient
-	private String memberName;
-	
-	public Integer getMemberId() {
-		return memberId;
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getMemberName() {
-		return memberName;
-	}
-
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public Integer getId() {

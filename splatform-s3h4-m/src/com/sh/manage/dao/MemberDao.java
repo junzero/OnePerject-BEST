@@ -1,11 +1,14 @@
 package com.sh.manage.dao;
 
+import java.util.List;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sh.manage.entity.Member;
+import com.sh.manage.entity.Vipcard;
 import com.sh.manage.module.page.Page;
 
 @Repository
@@ -32,7 +35,10 @@ public class MemberDao extends AbstractBaseDao<Member>{
 		String hql = "from Member where id= ";
 		hql += member.getId();
 		Query query = this.getCurrentSession().createQuery(hql);
-		return (Member) query.list().get(0);
+		if(query.list().size()>0){
+			return (Member) query.list().get(0);
+		}
+		return null;
 	}
 
 	/**
@@ -44,14 +50,14 @@ public class MemberDao extends AbstractBaseDao<Member>{
 	 */
 	public Page getAllMember(String name,String mobile,String cardNum,String status,int pageNo, int pageSize){
 		StringBuffer sbf = new StringBuffer();
-		sbf.append("select rt.* from (select s.id,s.avatar,s.birthday,s.email,s.name,s.address,s.mobile,s.card_num,s.card_created,s.card_deadline,s.status,s.sex,s.phone,s.province,s.city,s.group_id,s.card_password,s.member_level,s.point,s.balance,s.created,s.create_user "
+		sbf.append("select rt.* from (select s.id,s.avatar,s.birthday,s.email,s.name,s.address,s.mobile,s.status,s.sex,s.phone,s.province,s.city,s.store_id,s.member_level,s.point,s.created "
 				+ "from t_member s where 1=1");
 		
 		Object[] params = new Object[]{};
 		
 		if(!StringUtils.isEmpty(name)){
 			params = ArrayUtils.add(params, "%"+name+"%");
-			sbf.append(" and s.name like");
+			sbf.append(" and s.name like ?");
 		}
 		if(!StringUtils.isEmpty(mobile)){
 			params = ArrayUtils.add(params, "%"+mobile+"%");
@@ -67,8 +73,22 @@ public class MemberDao extends AbstractBaseDao<Member>{
 			sbf.append(" and s.status = ?");
 		}
 		
-		sbf.append(") as rt");
+		sbf.append(" order by id) as rt");
 		
 		return this.queryModelListByPage(sbf.toString(), params, pageNo, pageSize, Member.class);
+	}
+	
+	/**
+	 * 获取为绑定会员卡的会员
+	 * @return
+	 */
+	public List<Member> unbindCard(String memberId){
+		String sql = "select m.* from t_member m where "
+				+ "m.id not in (select DISTINCT ifnull( v.member_id ,0) from t_vipcard v)";
+		if(!StringUtils.isEmpty(memberId)){
+			sql += " or m.id = ?";
+			return this.queryList(sql, new Object[]{memberId});
+		}
+		return this.queryList(sql,null);
 	}
 }

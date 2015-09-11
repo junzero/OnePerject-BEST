@@ -1,5 +1,7 @@
 package com.sh.manage.dao;
 
+import java.util.List;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
@@ -29,10 +31,13 @@ public class VipcardDao extends AbstractBaseDao<Vipcard>{
 
 	@Override
 	public Vipcard getObject(Vipcard vipcard) {
-		String hql = "from Member where cardNum = ";
-		hql += vipcard.getCardNum();
+		String hql = "from Vipcard where cardNum= ";
+		hql += "'"+vipcard.getCardNum()+"'";
 		Query query = this.getCurrentSession().createQuery(hql);
-		return (Vipcard) query.list().get(0);
+		if(query.list().size()>0){
+			return (Vipcard) query.list().get(0);
+		}
+		return null;
 	}
 	
 	/**
@@ -44,24 +49,36 @@ public class VipcardDao extends AbstractBaseDao<Vipcard>{
 	 */
 	public Page getAllCard(String cardNum,String status,int pageNo, int pageSize){
 		StringBuffer sbf = new StringBuffer();
-		sbf.append("select rt.* from (select v.id,v.member_id,v.type,v.password,v.deadline,v.open_time,v.created_time,v.balance,v.status,v.card_num,m.name memberName "
-				+ "from t_vipcard v left join t_member m on v.member_id=m.id "
+		sbf.append("from Vipcard "
 				+ "where 1=1");
 		
 		Object[] params = new Object[]{};
 		
 		if(!StringUtils.isEmpty(cardNum)){
 			params = ArrayUtils.add(params, "%"+cardNum+"%");
-			sbf.append(" and s.card_num like ?");
+			sbf.append(" and cardNum like ?");
 		}
 		
 		if(!StringUtils.isEmpty(status)){
 			params = ArrayUtils.add(params, status);
-			sbf.append(" and s.status = ?");
+			sbf.append(" and status = ?");
 		}
-		
-		sbf.append(") as rt");
-		return this.queryModelListByPage(sbf.toString(), params, pageNo, pageSize, Vipcard.class);
+		sbf.append(" order by id");
+		return this.queryList(sbf.toString(), params, pageNo, pageSize);
 	}
-
+	
+	
+	public List<Vipcard> unbind(String memberId){
+		String sql = "select v.* from t_vipcard v where v.member_id is null";
+		if(!StringUtils.isEmpty(memberId)){
+			sql += " or v.member_id = ?";
+			return this.queryList(sql, new Object[]{memberId});
+		}
+		return this.queryList(sql, null);
+	}
+	
+	public List<Vipcard> findByMemberId(Integer memberId){
+		return this.queryhqlList("from  Vipcard v where v.member.id = ?", new Object[]{memberId});
+	}
+	
 }

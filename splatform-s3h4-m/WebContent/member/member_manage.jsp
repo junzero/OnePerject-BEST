@@ -57,8 +57,8 @@
 									<input id="mobile" class="form-control"
 										type="text" name="mobile" value="${mobile }"
 										placeholder="手机号"> 
-									<input id="cardNum" class="form-control" type="text" name="cardNum" value="${cardNum }"
-										placeholder="会员卡号"> 
+									<%-- <input id="cardNum" class="form-control" type="text" name="cardNum" value="${cardNum }"
+										placeholder="会员卡号">  --%>
 									<%-- <select id="auRoleId" name="auRoleId"
 										style="height: 33px; width: 120px; background: none repeat scroll 0 0 #f5f5f5 !important;"
 										class="form-control" id="form-field-select-3" data-placeholder="选择组织">
@@ -71,7 +71,7 @@
 											</option>
 										</c:forEach>
 									</select>  --%>
-									<select id="status"
+									<%-- <select id="status"
 										style="height: 33px; width: 80px; background: none repeat scroll 0 0 #f5f5f5 !important;"
 										class="form-control" id="form-field-select-3" name="status"
 										data-placeholder="">
@@ -80,7 +80,7 @@
 										<option value="1" onclick="setAuStatus('1');" <c:if test="${status == 1}">selected</c:if>>锁定</option>
 										<option value="2" onclick="setAuStatus('2');" <c:if test="${status == 2}">selected</c:if>>挂失</option>
 										<option value="3" onclick="setAuStatus('3');" <c:if test="${status == 3}">selected</c:if>>过期</option>
-									</select>
+									</select> --%>
 									<button class="btn btn-default" type="button" onClick="submitSearchForm()">
 												<i class="icon-search"></i>
 								    </button>
@@ -100,9 +100,9 @@
 													<th>姓名</th>
 													<th>手机号</th>
 													<th>会员卡号</th>
-													<th>办卡时间</th>
-													<th>有效期</th>
-													<th>状态</th>
+													<th>开通时间</th>
+													<th>金额</th>
+													<th>积分</th>
 													<th>操作</th>
 												</tr>
 											</thead>
@@ -114,15 +114,24 @@
 														<td>${member.id}</td>
 														<td>${member.name}</td>
 														<td>${member.mobile}</td>
-														<td>${member.cardNum}</td>
-														<td>${member.cardCreated}</td>
-														<td>${member.cardDeadline}</td>
-														<td>
-															<c:if test="${member.status eq '0'}">正常</c:if>
-															<c:if test="${member.status eq '1'}">锁定</c:if>
-															<c:if test="${member.status eq '2'}">挂失</c:if>
-															<c:if test="${member.status eq '3'}">过期</c:if>														
-														</td>
+														<c:forEach items="${member.vipcards}" var="card">
+															<c:if test="${card.status eq '1' }">
+																<td>${card.cardNum}</td>
+																<td>${card.openTime}</td>
+																<td>${card.balance}</td>
+															</c:if>
+															<c:if test="${card.status != '1' }">
+																<td></td>
+																<td></td>
+																<td></td>
+															</c:if>
+														</c:forEach>
+														<c:if test="${member.vipcards == null || member.vipcards.size()==0}">
+															<td></td>
+															<td></td>
+															<td></td>
+														</c:if>
+														<td>${member.point}</td>
 														<td>
 															<a data-toggle="modal" href="#auserEdit" title="编辑会员"
 																onClick="editMember('${member.id}');" class="btn btn-xs btn-primary"><i class="icon-edit"></i></a>
@@ -187,7 +196,7 @@
   	//组织新增
     var addmember = function(){
     		var diag = new zDialog();
-    		diag.Height = 360;
+    		diag.Height =400;
     		diag.Width = 600;
         	diag.Title = "系统管理-会员新增";
         	diag.URL = "<%=path %>/toAddMember.do";

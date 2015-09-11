@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sh.manage.entity.AppUser;
@@ -94,6 +95,12 @@ public class MemberController {
 		return model;
 	} 
 	
+	@RequestMapping(value="/unbindMembers.do")
+	@ResponseBody
+	public List<Member> getUnbind(HttpServletRequest req){
+		return memberService.getUnbindMember(req.getParameter("memberId"));
+	}
+	
 	/**
 	 * 跳转会员新增页面
 	 * @return
@@ -102,8 +109,6 @@ public class MemberController {
     public ModelAndView memberAddPage(HttpServletRequest req,
 			HttpServletResponse resp) {
 		ModelAndView model = new ModelAndView("/member/member_add");
-		//List<SysGroup> dbGroupList = groupService.getAllGroupList();
-		//model.addObject("groupList", dbGroupList);
         return model;
     }
 	
@@ -125,7 +130,6 @@ public class MemberController {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		try{
-			//  get/new appUser
 			memberService.updateMember(member);
 			msg="会员修改成功!";
 		}catch(Exception e){

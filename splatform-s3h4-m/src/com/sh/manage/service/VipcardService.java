@@ -1,6 +1,7 @@
 package com.sh.manage.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,14 @@ public class VipcardService extends BaseService{
 	
 	public void addVipcard(Vipcard vipcard){
 		vipcard.setCreatedTime(DateUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss") );
+		if(vipcard.getMember() != null){
+			if(vipcard.getMember().getId() == null){
+				vipcard.setMember(null);
+			}else{
+				//TODO 做会员卡 是否被绑定判断 有被其他会员绑定 抛出异常
+			}
+		}
+		
 		cardDao.save(vipcard);
 	}
 	
@@ -43,7 +52,29 @@ public class VipcardService extends BaseService{
 	}
 	
 	public void updateVipcard(Vipcard vipcard){
-		
+		Vipcard oldCard = cardDao.getObject(vipcard);
+		if(oldCard != null){
+			oldCard.setBalance(vipcard.getBalance());
+			oldCard.setCardNum(vipcard.getCardNum());
+			oldCard.setDeadline(vipcard.getDeadline());
+			oldCard.setOpenTime(vipcard.getOpenTime());
+			oldCard.setStatus(vipcard.getStatus());
+			oldCard.setMember(vipcard.getMember());
+			oldCard.setPassword(vipcard.getPassword());
+			oldCard.setType(vipcard.getType());
+		}
+		if(vipcard.getMember() != null){
+			if(vipcard.getMember().getId() == null){
+				oldCard.setMember(null);
+			}else{
+				//TODO 做会员卡 是否被绑定判断 有被其他会员绑定 抛出异常
+
+			}
+		}
+		cardDao.update(oldCard);
 	}
 	
+	public List<Vipcard> getUnbindCard(String memberId){
+		return cardDao.unbind(memberId);
+	}
 }

@@ -18,14 +18,14 @@
 <!-- BEGIN BODY -->
 <body>
 	<div id="wrap">
-		<form method="post" id="addForm" name="addForm" 
-						action="<spring:url value='/vipcardAdd.do' htmlEscape='true'/>" target="_self">
+		<form method="post" id="editForm" name="editForm" 
+						action="<spring:url value='/vipcardEdit.do' htmlEscape='true'/>" target="_self">
 			<div class="row">
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="cardNum">会员卡号</label>
-    					<input id="cardNum" class="form-control" type="text" datatype="s6-20" nullmsg="会员卡号必填" errormsg="请输入6-20个字符" ajaxurl="validCardNum.do" 
-									name="cardNum" value="" placeholder="请输入会员卡号">
+    					<input id="cardNum" class="form-control" type="text" datatype="s6-20" nullmsg="会员卡号必填" errormsg="请输入6-20个字符" ajaxurl="validCardNum.do?id=${vipcard.id }" 
+									name="cardNum" value="${vipcard.cardNum }" placeholder="请输入会员卡号">
 						<div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>
@@ -33,20 +33,19 @@
   					<div class="form-group" >
     					<label for="type">卡类别</label>
     					<select class="form-control" name="type" id="type">
-  							<option value="1">普通卡</option>
-  							<option value="2">白金卡</option>
-  							<option value="3">钻石卡</option>
+  							<option value="1" <c:if test="${vipcard.type eq '1' }">selected</c:if>>普通卡</option>
+  							<option value="2" <c:if test="${vipcard.type eq '2' }">selected</c:if>>白金卡</option>
+  							<option value="3" <c:if test="${vipcard.type eq '3' }">selected</c:if>>钻石卡</option>
 						</select>
   					</div>
   				</div>
   			</div>
-  			
-			<div class="row">
+  			<div class="row">
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="openTime">开通日期</label>
     					<input id="openTime" class="form-control" type="text"
-									name="openTime" value="" placeholder="请输入开通日期" readonly>
+								value="${vipcard.openTime }" name="openTime" value="" placeholder="请输入开通日期" readonly>
 						
   					</div>
   				</div>
@@ -54,7 +53,7 @@
   					<div class="form-group">
     					<label for="deadline">有效日期</label>
     					<input id="deadline" class="form-control" type="text"
-									name="deadline" value="" placeholder="请输入有效日期" readonly>
+									value="${vipcard.deadline }" name="deadline" value="" placeholder="请输入有效日期" readonly>
   					</div>
   				</div>
   			</div>	
@@ -62,28 +61,30 @@
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="password">会员卡密码</label>
-    					<input id="password" class="form-control" type="text"
-									name="password" value="" placeholder="会员卡密码">
+    					<input id="password" class="form-control" type="text"  datatype="s0-10"
+								value="${vipcard.password }"	name="password" placeholder="会员卡密码">
+								<div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="balance">卡内金额</label>
     					<input type="text" class="form-control" id="balance" name="balance" datatype="/^[0-9]+(\.[0-9]{2})?$/i" nullmsg="金额必填" errormsg="请输入正确的金额"
-    					 value="0" placeholder="请输入卡内金额额">
+    					 value="${vipcard.balance }" placeholder="请输入卡内金额额">
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>	
 			</div>
+			
   			<div class="row">
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group" >
     					<label for="status">卡状态</label>
     					<select class="form-control" name="status" id="status">
-  							<option value="0">未开通</option>
-  							<option value="1">已开通</option>
-  							<option value="2">注销</option>
-  							<option value="3">冻结</option>
+  							<option value="0" <c:if test="${vipcard.status eq '0' }">selected</c:if>>未开通</option>
+  							<option value="1" <c:if test="${vipcard.status eq '1' }">selected</c:if>>已开通</option>
+  							<option value="2" <c:if test="${vipcard.status eq '2' }">selected</c:if>>注销</option>
+  							<option value="3" <c:if test="${vipcard.status eq '3' }">selected</c:if>>冻结</option>
 						</select>
   					</div>
   				</div>
@@ -91,7 +92,7 @@
   					<div class="form-group">
     					<label for="address">绑定会员</label>
     					<select class="remote-data form-control" id="memberId" name="member.id">
-  							<option value="" selected="selected">请选择会员</option>
+  							<option value="">请选择会员</option>
 						</select>
   					</div>
   				</div>	
@@ -118,19 +119,20 @@
 					$.ajax({  
 						type:'get',  
 						url:'unbindMembers.do',  
-						data:{},  
+						data:{memberId:'${vipcard.member.id}'},  
 						cache:true,  
 						dataType:'json',  
 					    success:function(data){  
 							 $(data).each(function(index,item){
 								 $("#memberId").append("<option value='"+item[0]+"'>"+item[1]+"</option>");
-								 $('.remote-data').select2({
+								 var $select = $('.remote-data').select2({
 								});
+								 $('.remote-data').val("${vipcard.member.id}").trigger("change");
 							 })
 						},  
 						error:function(){}  
 					}); 
-			 		$form = $('#addForm').Validform({tiptype:function(msg,o,cssctl){
+			 		$form = $('#editForm').Validform({tiptype:function(msg,o,cssctl){
 						//msg：提示信息;
 						//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
 						//cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;

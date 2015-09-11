@@ -2,13 +2,16 @@ package com.sh.manage.service;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.manage.dao.MemberDao;
+import com.sh.manage.dao.VipcardDao;
 import com.sh.manage.entity.Member;
+import com.sh.manage.entity.Vipcard;
 import com.sh.manage.module.page.Page;
 
 @Service
@@ -17,6 +20,8 @@ public class MemberService extends BaseService{
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired 
+	private VipcardDao cardDao;
 	/**
 	 * 查询所有会员
 	 * @param pageSize 
@@ -31,6 +36,19 @@ public class MemberService extends BaseService{
 	public void addMember(Member member){
 		member.setCreated(DateUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss") );
 		memberDao.save(member);
+		if(member.getVipcards()!= null && member.getVipcards().size()>0){
+			Vipcard vipcard = cardDao.getObject(member.getVipcards().get(0));
+			if(vipcard != null){
+				vipcard.setMember(member);
+				vipcard.setStatus("1");
+				vipcard.setOpenTime(DateUtil.formatDate(new Date(), "yyyy-MM-dd"));
+				//TODO 做会员卡是否被绑定校验 
+				cardDao.update(vipcard);
+			}
+			
+		}else{
+			member.setVipcards(null);
+		}
 	}
 	
 	public void updateMember(Member member){
@@ -50,6 +68,23 @@ public class MemberService extends BaseService{
 			oldMember.setSex(member.getSex());
 			oldMember.setStatus(member.getStatus());
 		}
+		List<Vipcard> cards = cardDao.findByMemberId(oldMember.getId());
+		for(Vipcard card : cards ){
+			card.setStatus("2");
+			cardDao.save(card);
+		}
+		if(member.getVipcards()!= null && member.getVipcards().size()>0){
+			Vipcard vipcard = cardDao.getObject(member.getVipcards().get(0));
+			if(vipcard != null){
+				vipcard.setMember(member);
+				vipcard.setStatus("1");
+				vipcard.setOpenTime(DateUtil.formatDate(new Date(), "yyyy-MM-dd"));
+				//TODO 做会员卡是否被绑定校验 
+				cardDao.update(vipcard);
+			}
+		}else{
+			member.setVipcards(null);
+		}
 		memberDao.update(oldMember);
 	}
 	
@@ -59,5 +94,9 @@ public class MemberService extends BaseService{
 	
 	public void delMember(Member member){
 		memberDao.delete(member);
+	}
+	
+	public List<Member> getUnbindMember(String memberId){
+		return memberDao.unbindCard(memberId);
 	}
 }
