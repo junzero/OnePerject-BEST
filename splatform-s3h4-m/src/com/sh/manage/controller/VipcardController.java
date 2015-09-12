@@ -26,6 +26,7 @@ import com.sh.manage.entity.Member;
 import com.sh.manage.entity.Vipcard;
 import com.sh.manage.module.page.Page;
 import com.sh.manage.service.VipcardService;
+import com.sh.manage.utils.JsonUtils;
 import com.sh.manage.utils.WebUtils;
 
 @Controller
@@ -72,7 +73,8 @@ public class VipcardController {
 	@RequestMapping(value="/unbindCards.do")
 	@ResponseBody
 	public List<Vipcard> unbindCards(HttpServletRequest req){
-		return vipcardService.getUnbindCard(req.getParameter("memberId"));
+		List<Vipcard> cards = vipcardService.getUnbindCard(req.getParameter("memberId"));
+		return cards;
 	}
 	
 	@RequestMapping(value="/toAddVipcard.do")

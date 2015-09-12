@@ -69,12 +69,12 @@ public class VipcardDao extends AbstractBaseDao<Vipcard>{
 	
 	
 	public List<Vipcard> unbind(String memberId){
-		String sql = "select v.* from t_vipcard v where v.member_id is null";
+		String sql = "from Vipcard v where v.member is null ";
 		if(!StringUtils.isEmpty(memberId)){
-			sql += " or v.member_id = ?";
-			return this.queryList(sql, new Object[]{memberId});
+			sql += " or v.member.id = ?";
+			return this.queryhqlList(sql, new Object[]{memberId});
 		}
-		return this.queryList(sql, null);
+		return this.queryhqlList(sql, null);
 	}
 	
 	public List<Vipcard> findByMemberId(Integer memberId){

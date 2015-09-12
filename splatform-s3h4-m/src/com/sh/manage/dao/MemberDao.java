@@ -87,8 +87,8 @@ public class MemberDao extends AbstractBaseDao<Member>{
 				+ "m.id not in (select DISTINCT ifnull( v.member_id ,0) from t_vipcard v)";
 		if(!StringUtils.isEmpty(memberId)){
 			sql += " or m.id = ?";
-			return this.queryList(sql, new Object[]{memberId});
+			return (List<Member>) this.queryModelSqlList(sql, new Object[]{memberId},Member.class);
 		}
-		return this.queryList(sql,null);
+		return (List<Member>) this.queryModelSqlList(sql,null,Member.class);
 	}
 }

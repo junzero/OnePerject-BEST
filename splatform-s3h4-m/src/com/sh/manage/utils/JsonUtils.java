@@ -4,14 +4,25 @@
 package com.sh.manage.utils;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.aspectj.weaver.ast.HasAnnotation;
 import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.JsonGenerator.Feature;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.MappingJsonFactory;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.type.TypeReference;
+
+import com.sh.manage.entity.Vipcard;
+
+import net.sf.json.util.JSONUtils;
 
 /**
  * JSON转换处理工具类
@@ -91,6 +102,16 @@ public class JsonUtils {
 		}
 	}
 
+	public  static void main(String[] args){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("name", "ss");
+		Vipcard card =  new Vipcard();
+		card.setCardNum("name");
+		List<Vipcard> cars = new ArrayList<>();
+		cars.add(card);
+		System.out.println(JsonUtils.toJson(cars));
+		
+	}
 	/**
 	 * Object对象转换为JSON格式 例如List对象、JavaBean对象、JavaBean对象数组、Map对象、List Map对象
 	 * 
@@ -106,6 +127,7 @@ public class JsonUtils {
 
 		try {
 			JsonGenerator generator = f.createJsonGenerator(sw);
+			generator.configure(Feature.AUTO_CLOSE_JSON_CONTENT, true);
 			generator.writeObject(object);
 			generator.close();
 

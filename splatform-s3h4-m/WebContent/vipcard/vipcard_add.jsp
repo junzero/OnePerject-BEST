@@ -123,7 +123,7 @@
 						dataType:'json',  
 					    success:function(data){  
 							 $(data).each(function(index,item){
-								 $("#memberId").append("<option value='"+item[0]+"'>"+item[1]+"</option>");
+								 $("#memberId").append("<option value='"+item.id+"'>"+item.name+"</option>");
 								 $('.remote-data').select2({
 								});
 							 })

@@ -133,7 +133,7 @@
 						dataType:'json',  
 					    success:function(data){  
 							 $(data).each(function(index,item){
-								 $("#cardNum").append("<option value='"+item[1]+"'>"+item[1]+"</option>");
+								 $("#cardNum").append("<option value='"+item.cardNum+"'>"+item.cardNum+"</option>");
 								 $('.remote-data').select2({});
 								 $('.remote-data').val("${vipcard.member.id}").trigger("change");
 								 $('.remote-data').val("<c:out value="${cardNum}"></c:out>").trigger("change");
