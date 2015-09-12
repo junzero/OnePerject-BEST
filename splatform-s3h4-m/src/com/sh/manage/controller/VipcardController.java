@@ -31,7 +31,7 @@ import com.sh.manage.utils.WebUtils;
 @Controller
 public class VipcardController {
 	
-	private Logger logger = Logger.getLogger(MemberController.class);
+	private Logger logger = Logger.getLogger(VipcardController.class);
 	
 	@Autowired
 	private VipcardService vipcardService;

@@ -42,30 +42,28 @@
             <div class="inner" style="min-height:1200px;">
                 <div class="row">
                     <div class="col-lg-12">
-	                        <h5>系统管理-会员卡管理</h5>
+	                        <h5>系统管理-商品管理</h5>
 	                    </div>
 	                </div>
 	                <hr />
 	                <div class="page-header mr0">
 						<form id="aUserSearchForm" name="aUserSearchForm"
-							action="<spring:url value='/vipcardManager.do' htmlEscape='true'/>"
+							action="<spring:url value='/goodsManager.do' htmlEscape='true'/>"
 							method="post" target="_self">
 		            		<div class="form-group">
 								<div class="">
 									<i class="icon-hand-right"></i><span>搜索</span> 
 									
-									<input id="cardNum" class="form-control" type="text" name="cardNum" value="${cardNum }"
-										placeholder="会员卡号"> 
+									<input id="name" class="form-control" type="text" name="name" value="${name }"
+										placeholder="商品名称"> 
 								
-									<select id="status"
+									<select id="type"
 										style="height: 33px; width: 80px; background: none repeat scroll 0 0 #f5f5f5 !important;"
-										class="form-control" id="form-field-select-3" name="status"
+										class="form-control" id="form-field-select-3" name="type"
 										data-placeholder="">
 										<option value="" selected>全部</option>
-										<option value="0">未开通</option>
-										<option value="1" onclick="setAuStatus('1');" <c:if test="${status == 1}">selected</c:if>>已开通</option>
-										<option value="2" onclick="setAuStatus('2');" <c:if test="${status == 2}">selected</c:if>>注销</option>
-										<option value="3" onclick="setAuStatus('3');" <c:if test="${status == 3}">selected</c:if>>挂失</option>
+										<option value="1" onclick="setAuStatus('1');" <c:if test="${status == 1}">selected</c:if>>产品</option>
+										<option value="2" onclick="setAuStatus('2');" <c:if test="${status == 2}">selected</c:if>>服务</option>
 									</select>
 									<button class="btn btn-default" type="button" onClick="submitSearchForm()">
 												<i class="icon-search"></i>
@@ -81,16 +79,15 @@
 											<thead>
 												<tr>
 													<th class="center">操作</th>
-													<th>会员卡号</th>
-													<th>绑定会员</th>
-													<th>开通日期</th>
-													<th>有效期</th>
-													<th>状态</th>
+													<th>商品名称</th>
+													<th>商品类型</th>
+													<th>商品价格</th>
+													<th>商品描述</th>
 												</tr>
 											</thead>
 
 											<tbody>
-												<c:forEach items="${vipcardList}" var="vipcard"
+												<c:forEach items="${goodsList}" var="goods"
 													varStatus="status">
 													<tr>
 														<td width="60">
@@ -102,23 +99,17 @@
 																</button>
 																<ul class="dropdown-menu">
 																	<li><a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
-																		onClick="editVipcard('${vipcard.cardNum}');">编辑</a></li>
-																	<li><a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delVipcard('${vipcard.cardNum}');">删除</a></li>
+																		onClick="editGoods('${goods.id}');">编辑</a></li>
+																	<li><a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delGoods('${goods.id}');">删除</a></li>
 																	
 																</ul>
 															</div>
 														</td>
-														<td>${vipcard.cardNum}</td>
-														<td>${vipcard.member.name}</td>
-														<td>${vipcard.openTime}</td>
-														<td>${vipcard.deadline}</td>
-														<td>
-															<c:if test="${vipcard.status eq '0'}">未开通</c:if>
-															<c:if test="${vipcard.status eq '1'}">已开通</c:if>
-															<c:if test="${vipcard.status eq '2'}">注销</c:if>
-															<c:if test="${vipcard.status eq '3'}">挂失</c:if>														
-														</td>
-						
+														<td>${goods.name}</td>
+														<td><c:if test="${goods.type eq '1'}">产品</c:if>
+															<c:if test="${goods.type eq '2'}">服务</c:if></td>
+														<td>${goods.price}</td>
+														<td>${goods.description}</td>
 													</tr>
 												</c:forEach>
 
@@ -136,7 +127,7 @@
 								<!-- /row -->
 							<div
 								style="display: inline-block; background-repeat: no-repeat; border-width: 4px; font-size: 13px; line-height: 1.39; padding: 4px 9px;">
-								<a onclick="addVipcard();" href="javascript:;" class="btn btn-success btn-sm">添加</a>
+								<a onclick="addGoods();" href="javascript:;" class="btn btn-success btn-sm">添加</a>
 							</div>
 							<div class="hr hr-18 dotted hr-double"></div>
                     </div>
@@ -173,12 +164,12 @@
     <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
     <script type="text/javascript">
 
-    var addVipcard = function(){
+    var addGoods = function(){
     		var diag = new zDialog();
     		diag.Height = 360;
     		diag.Width = 600;
-        	diag.Title = "系统管理-会员卡新增";
-        	diag.URL = "<%=path %>/toAddVipcard.do";
+        	diag.Title = "系统管理-商品新增";
+        	diag.URL = "<%=path %>/toAddGoods.do";
         	diag.OKEvent = function(){
         		//参数校验
         		if(diag.innerWin.check()){
@@ -199,12 +190,12 @@
     }
     
     //在父页面提交iframe中的表单
-    var editVipcard = function(cardNum){
+    var editGoods = function(id){
     		var diag = new zDialog();
     		diag.Height = 360;
     		diag.Width = 600;
-    		diag.Title = "系统管理-会员卡编辑";
-        	diag.URL = "<%=path %>/toEditVipcard.do?cardNum="+cardNum;
+    		diag.Title = "系统管理-商品编辑";
+        	diag.URL = "<%=path %>/toEditGoods.do?id="+id;
         	diag.OKEvent = function(){
         		
         		//参数校验
@@ -227,9 +218,9 @@
     
     
     //组织删除
-    var delVipcard= function(cardNum){
-    	$('#del_cardNum').val(cardNum);
-    	zDialog.confirm('警告：您确认要删除会员卡['+cardNum+']吗？',function(){
+    var delGoods= function(id){
+    	$('#del_goodsId').val(id);
+    	zDialog.confirm('警告：您确认要删除该商品吗？',function(){
     		document.getElementById('delForm').submit();diag.close();
     	});
     }
@@ -245,15 +236,15 @@
 					document.getElementById("auRoleId").value=auRoleId;
 				}
 				var setAuStatus = function(auStatus){
-					document.getElementById("status").value=auStatus;
+					document.getElementById("type").value=auStatus;
 				}
 				var submitSearchForm = function(){
 					document.getElementById("aUserSearchForm").submit();
 				}
 </script>    
 
-<form id="delForm" name="delForm" method="post" action="delVipcard.do" target="thisFrame">
-	<input type="hidden" id="del_cardNum" name="cardNum">
+<form id="delForm" name="delForm" method="post" action="delGoods.do" target="thisFrame">
+	<input type="hidden" id="del_goodsId" name="id">
 </form>
 <iframe style="display: none" name="thisFrame"></iframe>
 </html>

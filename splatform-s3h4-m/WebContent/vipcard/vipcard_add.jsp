@@ -69,7 +69,7 @@
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
     					<label for="balance">卡内金额</label>
-    					<input type="text" class="form-control" id="balance" name="balance" datatype="/^[0-9]+(\.[0-9]{2})?$/i" nullmsg="金额必填" errormsg="请输入正确的金额"
+    					<input type="text" class="form-control" id="balance" name="balance" datatype="/^[0-9]+(\.[0-9]{1,2})?$/i" nullmsg="金额必填" errormsg="请输入正确的金额"
     					 value="0" placeholder="请输入卡内金额额">
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
