@@ -74,6 +74,14 @@ public class VipcardController {
 	@ResponseBody
 	public List<Vipcard> unbindCards(HttpServletRequest req){
 		List<Vipcard> cards = vipcardService.getUnbindCard(req.getParameter("memberId"));
+		System.out.println(JsonUtils.toJson(cards));
+		return cards;
+	}
+	
+	@RequestMapping(value="/findByFilter.do")
+	@ResponseBody
+	public List<Vipcard> findByFilter(HttpServletRequest req){
+		List<Vipcard> cards = vipcardService.findByFilter(req.getParameter("filter"));
 		return cards;
 	}
 	

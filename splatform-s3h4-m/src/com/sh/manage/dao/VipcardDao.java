@@ -69,16 +69,30 @@ public class VipcardDao extends AbstractBaseDao<Vipcard>{
 	
 	
 	public List<Vipcard> unbind(String memberId){
-		String sql = "from Vipcard v where v.member is null ";
+		String sql = "select v.* from t_vipcard v where v.member_id is null ";
 		if(!StringUtils.isEmpty(memberId)){
-			sql += " or v.member.id = ?";
-			return this.queryhqlList(sql, new Object[]{memberId});
+			sql += " or v.member_id = ?";
+			return (List<Vipcard>) this.queryModelSqlList(sql, new Object[]{Integer.valueOf(memberId)}, Vipcard.class);
 		}
-		return this.queryhqlList(sql, null);
+		return (List<Vipcard>) this.queryModelSqlList(sql, null, Vipcard.class);
 	}
 	
 	public List<Vipcard> findByMemberId(Integer memberId){
 		return this.queryhqlList("from  Vipcard v where v.member.id = ?", new Object[]{memberId});
 	}
 	
+	public List<Vipcard> findByFilter(String filter){
+		StringBuffer hql = new StringBuffer("from Vipcard where status='1'");
+		Object[] params = new Object[]{};
+		if(!StringUtils.isEmpty(filter)){
+			params = ArrayUtils.add(params, "%"+filter+"%");
+			hql.append(" and (cardNum like ?");
+			params = ArrayUtils.add(params, "%"+filter+"%");
+			hql.append(" or member.name like ?");
+			params = ArrayUtils.add(params, "%"+filter+"%");
+			hql.append(" or member.mobile like ?)");
+		}
+		return this.queryhqlList(hql.toString(), params);
+		
+	}
 }

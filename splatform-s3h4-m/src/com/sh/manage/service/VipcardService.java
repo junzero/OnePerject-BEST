@@ -77,4 +77,8 @@ public class VipcardService extends BaseService{
 	public List<Vipcard> getUnbindCard(String memberId){
 		return cardDao.unbind(memberId);
 	}
+	
+	public List<Vipcard> findByFilter(String filter){
+		return cardDao.findByFilter(filter);
+	}
 }

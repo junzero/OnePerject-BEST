@@ -14,12 +14,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 
 
 @Entity
 @Table(name = "T_Member", schema = "SPLATFORM_DB")
+@JsonIgnoreProperties({"vipcards","hibernateLazyInitializer","handler","fieldHandler"})
 public class Member implements Serializable{
 	
 	private static final long serialVersionUID = 7488904616028381007L;

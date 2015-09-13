@@ -20,6 +20,7 @@ import org.codehaus.jackson.map.MappingJsonFactory;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.type.TypeReference;
 
+import com.sh.manage.entity.Member;
 import com.sh.manage.entity.Vipcard;
 
 import net.sf.json.util.JSONUtils;
@@ -109,6 +110,9 @@ public class JsonUtils {
 		card.setCardNum("name");
 		List<Vipcard> cars = new ArrayList<>();
 		cars.add(card);
+		Member member = new Member();
+		card.setMember(member);
+		System.out.println(JsonUtils.toJson(card));
 		System.out.println(JsonUtils.toJson(cars));
 		
 	}

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sh.manage.entity.Goods;
-import com.sh.manage.entity.Vipcard;
 import com.sh.manage.module.page.Page;
 import com.sh.manage.service.GoodsService;
 import com.sh.manage.utils.WebUtils;
@@ -67,7 +66,7 @@ public class GoodsController {
 	@RequestMapping(value="/allGoods.do")
 	@ResponseBody
 	public List<Goods> allGppds(HttpServletRequest req){
-		return goodsService.findAll();
+		return goodsService.findAll(req.getParameter("name"));
 	}
 	
 	@RequestMapping(value="/toAddGoods.do")

@@ -67,7 +67,8 @@ public class GoodsDao extends AbstractBaseDao<Goods>{
 		return this.queryList(sbf.toString(), params, pageNo, pageSize);
 	}
 
-	public List<Goods> findAll(){
-		return this.queryhqlList("from  Goods", null);
+	public List<Goods> findAll(String name){
+		name += "%"+name+"%";
+		return this.queryhqlList("from  Goods where name like ?", new Object[]{name});
 	}
 }

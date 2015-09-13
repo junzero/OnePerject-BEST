@@ -43,8 +43,8 @@ public class GoodsService extends BaseService{
 		}
 	}
 	
-	public List<Goods> findAll(){
-		return goodsDao.findAll();
+	public List<Goods> findAll(String name){
+		return goodsDao.findAll(name);
 	}
 	
 	
