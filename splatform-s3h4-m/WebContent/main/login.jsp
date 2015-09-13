@@ -165,6 +165,8 @@ background-color
 
 </head>
 <body class="login-layout" style="margin: 0;padding: 0;">
+
+<div   style="margin-left: 33%"> <img alt="User Picture" src="/splatform-s3h4-m/static/assets/img/head_mp.jpg"></div>
 	<div class="login-container margin120 position-relative">
 			<div id="login-box"
 				class="login-box visible widget-box no-border border start">
