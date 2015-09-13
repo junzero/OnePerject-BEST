@@ -155,7 +155,7 @@ background-color
 }
 
 .margin120 {
-	margin: 120px auto;
+	margin: 70px auto;
 }
 
 .emp_ipt {
