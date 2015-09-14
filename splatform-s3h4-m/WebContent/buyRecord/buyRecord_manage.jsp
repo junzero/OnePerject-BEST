@@ -48,7 +48,7 @@
 	                <hr />
 	                <div class="page-header mr0">
 						<form id="aUserSearchForm" name="aUserSearchForm"
-							action="<spring:url value='/recordManager.do' htmlEscape='true'/>"
+							action="<spring:url value='/buyRecordManager.do' htmlEscape='true'/>"
 							method="post" target="_self">
 		            		<div class="form-group">
 								<div class="">
@@ -189,7 +189,7 @@
     		diag.Height = 360;
     		diag.Width = 600;
     		diag.Title = "系统管理-消费记录编辑";
-        	diag.URL = "<%=path %>/toEditBuyRecoed.do?id="+id;
+        	diag.URL = "<%=path %>/toEditBuyRecord.do?id="+id;
         	diag.OKEvent = function(){
         		
         		//参数校验
@@ -237,7 +237,7 @@
 				}
 </script>    
 
-<form id="delForm" name="delForm" method="post" action="delrecord.do" target="thisFrame">
+<form id="delForm" name="delForm" method="post" action="delBuyRecord.do" target="thisFrame">
 	<input type="hidden" id="del_recordId" name="id">
 </form>
 <iframe style="display: none" name="thisFrame"></iframe>

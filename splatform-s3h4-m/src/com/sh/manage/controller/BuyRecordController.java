@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sh.manage.entity.BuyRecord;
+import com.sh.manage.entity.Goods;
 import com.sh.manage.module.page.Page;
 import com.sh.manage.service.BuyRecordService;
 import com.sh.manage.utils.WebUtils;
@@ -82,11 +83,12 @@ public class BuyRecordController {
 		String msg="";
 		
 		try{
+			buyRecord.setCreateUser(request.getSession().getAttribute("name").toString());
 			buyRecordService.addBuyRecord(buyRecord);
 			msg="消费记录添加成功!";
 		}catch(Exception e){
 			logger.error("controller:消费记录添加异常!",e);
-			msg="消费记录添加出现异常";
+			msg = e.getMessage();
 			model.addAttribute("msg", msg);
 			return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/goodsManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
 			
@@ -94,6 +96,63 @@ public class BuyRecordController {
 		return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/goodsManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value="/toEditBuyRecord.do")
+    public ModelAndView toEditBuyRecord(@RequestParam(value = "id", required = true) Integer id,HttpServletRequest req,
+			HttpServletResponse resp) {
+		ModelAndView model = new ModelAndView("/buyRecord/buyRecord_edit");
+		model.addObject("buyRecord", buyRecordService.getById(id));
+        return model;
+    }
+	
+	@RequestMapping(value = "/buyRecordEdit.do", method = RequestMethod.POST)
+	public ResponseEntity<String> buyRecordEdit(@ModelAttribute BuyRecord buyRecord,HttpServletRequest request,HttpServletResponse response,
+			Model model){
+		logger.info("controller:..消费记录修改!");
+		String msg="";
+		boolean isCorrect = true;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/html;charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
+		try{
+			//  get/new appUser
+			buyRecordService.updateBuyRecord(buyRecord);
+			msg="消费记录修改成功!";
+		}catch(Exception e){
+			logger.error("controller:消费记录修改异常!",e);
+			msg=e.getMessage();
+			model.addAttribute("msg", msg);
+			return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+		}
+		logger.info("controller:商品修改结束!");
+		return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/delBuyRecord.do")
+    public ResponseEntity<String> delBuyRecord(HttpServletRequest req,
+			HttpServletResponse resp,
+    		@RequestParam(value = "id", required = true) Integer id,
+			HttpServletRequest request,HttpServletResponse response,
+			Model model) {		
+		logger.info("controller:GroupController..消费记录删除!");
+		String msg="";
+		boolean isCorrect = true;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/html;charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		try{
+			BuyRecord buyRecord = buyRecordService.getById(id);
+			buyRecordService.delBuyRecord(buyRecord);
+			msg="消费记录删除成功!";
+		}catch(Exception e){
+			logger.error("controller:GroupController:会员卡删除异常!"+id,e);
+			msg="消费记录删除出现异常";
+			model.addAttribute("msg", msg);
+			return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+		}
+		logger.info("controller:GroupController:商品删除结束!");
+        return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+    }
 	
 	/** 当前页 */
 	private int initPageNo = 1;

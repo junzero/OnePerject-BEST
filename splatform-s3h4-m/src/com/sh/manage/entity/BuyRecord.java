@@ -48,7 +48,7 @@ public class BuyRecord implements Serializable{
 	private BigDecimal totalPrice;
 	
 	@Column(name="buy_time")
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.DATE)
 	private Date buyTime;
 	
 	@Column(name="point")
@@ -57,7 +57,8 @@ public class BuyRecord implements Serializable{
 	@Column(name="remark",length=256)
 	private String remark;
 	
-	@Column(name="created_date",length=256)
+	@Column(name="created_date")
+	@Temporal(TemporalType.TIME)
 	private Date createdDate;
 	
 	@Column(name="create_user",length=20)
