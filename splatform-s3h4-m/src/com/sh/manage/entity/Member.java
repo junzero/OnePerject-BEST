@@ -107,7 +107,7 @@ public class Member implements Serializable{
 	 * 积分
 	 */
 	@Column(name="point", length=8)
-	private String point;
+	private Integer point;
 	
 	
 	/**
@@ -234,11 +234,11 @@ public class Member implements Serializable{
 		this.memberLevel = memberLevel;
 	}
 
-	public String getPoint() {
+	public Integer getPoint() {
 		return point;
 	}
 
-	public void setPoint(String point) {
+	public void setPoint(Integer point) {
 		this.point = point;
 	}
 

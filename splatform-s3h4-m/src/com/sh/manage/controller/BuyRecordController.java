@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sh.manage.entity.BuyRecord;
-import com.sh.manage.entity.Goods;
 import com.sh.manage.module.page.Page;
 import com.sh.manage.service.BuyRecordService;
 import com.sh.manage.utils.WebUtils;
@@ -90,10 +89,10 @@ public class BuyRecordController {
 			logger.error("controller:消费记录添加异常!",e);
 			msg = e.getMessage();
 			model.addAttribute("msg", msg);
-			return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/goodsManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+			return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
 			
 		}
-		return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/goodsManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/buyRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/toEditBuyRecord.do")

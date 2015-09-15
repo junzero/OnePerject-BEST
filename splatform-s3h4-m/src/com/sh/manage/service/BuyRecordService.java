@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.manage.dao.BuyRecordDao;
-import com.sh.manage.dao.BuyRecordItemDao;
 import com.sh.manage.dao.GoodsDao;
 import com.sh.manage.dao.MemberDao;
 import com.sh.manage.dao.VipcardDao;
@@ -48,10 +47,10 @@ public class BuyRecordService extends BaseService{
 		card.setCardNum(buyRecord.getCardNum());
 		card = cardDao.getObject(card);
 		Member member = card.getMember();
-		Integer point = Integer.valueOf(member.getPoint())-buyRecord.getPoint();
-		member.setPoint(point.toString());
-		BigDecimal balance = new BigDecimal(card.getBalance()).add(buyRecord.getTotalPrice());
-		card.setBalance(balance.toString());
+		Integer point = member.getPoint()-buyRecord.getPoint();
+		member.setPoint(point);
+		BigDecimal balance = card.getBalance().add(buyRecord.getTotalPrice());
+		card.setBalance(balance);
 		buyRecordDao.delete(buyRecord);
 		cardDao.save(card);
 		memberDao.save(member);
@@ -70,10 +69,10 @@ public class BuyRecordService extends BaseService{
 			item.setTotalPrice(item.getPirce().multiply(new BigDecimal(item.getQuantity())));
 			totalPrice = totalPrice.add(item.getTotalPrice());
 		}
-		if(new BigDecimal(card.getBalance()).compareTo(totalPrice) < 0){
+		if(card.getBalance().compareTo(totalPrice) < 0){
 			throw new SPlatformServiceException("会员卡余额不足，无法添加消费记录");
 		}
-		card.setBalance(new BigDecimal(card.getBalance()).subtract(totalPrice).toString());
+		card.setBalance(card.getBalance().subtract(totalPrice));
 		buyRecord.setCreatedDate(new Date(System.currentTimeMillis()));
 		buyRecord.setBuyTime(new Date(System.currentTimeMillis()));
 		buyRecord.setMemberId(card.getMember().getId());
@@ -82,8 +81,8 @@ public class BuyRecordService extends BaseService{
 		buyRecord.setPoint(totalPrice.intValue());//TODO 计算获得积分
 		buyRecordDao.save(buyRecord);
 		Member member = card.getMember();
-		Integer point = Integer.valueOf(member.getPoint())+buyRecord.getPoint();
-		card.getMember().setPoint(point.toString());
+		Integer point = member.getPoint()+buyRecord.getPoint();
+		card.getMember().setPoint(point);
 		cardDao.save(card);
 		memberDao.save(member);
 	}
@@ -103,21 +102,43 @@ public class BuyRecordService extends BaseService{
 		}
 		
 		BuyRecord old = buyRecordDao.getObject(buyRecord);
-		if(old.getTotalPrice().add(new BigDecimal(card.getBalance())).compareTo(totalPrice) < 0){
+		Member member = card.getMember();
+		if(!old.getCardNum().equals(card.getCardNum())){
+			Vipcard oldCard = new Vipcard();
+			oldCard.setCardNum(old.getCardNum());
+			oldCard = cardDao.getObject(oldCard);
+			BigDecimal oldBalance = oldCard.getBalance().add(old.getTotalPrice());
+			oldCard.setBalance(oldBalance);
+			Member oldMember = oldCard.getMember();
+			Integer oldPoint = oldMember.getPoint()-old.getTotalPrice().intValue();
+			oldMember.setPoint(oldPoint);
+			
+			cardDao.save(oldCard);
+			memberDao.save(oldMember);
+			
+			member.setPoint(member.getPoint()+totalPrice.intValue());
+			card.setBalance(card.getBalance().subtract(totalPrice));
+			
+		}else{
+			
+			Integer point = member.getPoint() - old.getPoint() + totalPrice.intValue();
+			member.setPoint(point);
+			card.setBalance(card.getBalance().add(old.getTotalPrice()).subtract(totalPrice));
+		}
+		
+		if (old.getTotalPrice().add(card.getBalance()).compareTo(totalPrice) < 0) {
 			throw new SPlatformServiceException("会员卡余额不足，无法添加消费记录");
 		}
-		Member member = card.getMember();
-		Integer point = Integer.valueOf(member.getPoint())-old.getPoint()+totalPrice.intValue();
-		member.setPoint(point.toString());
-		card.setBalance(new BigDecimal(card.getBalance()).add(old.getTotalPrice()).subtract(totalPrice).toString());
+		
+		cardDao.save(card);
+		memberDao.save(member);
+		old.setCardNum(card.getCardNum());
+		old.setRemark(buyRecord.getRemark());
 		old.setMemberId(card.getMember().getId());
 		old.setMemberName(card.getMember().getName());
 		old.setTotalPrice(totalPrice);
 		old.setPoint(totalPrice.intValue());
 		old.setItems(items);
 		buyRecordDao.save(old);
-		cardDao.save(card);
-		memberDao.save(card.getMember());
-		
 	}
 }

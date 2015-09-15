@@ -6,6 +6,7 @@
 <%@ include file="../main/header.jsp"%>
  <link rel="stylesheet" href="<%=hpath %>/static/css/validcss.css" />
   <link rel="stylesheet" href="<%=hpath %>/static/js/select2/select2.min.css" />
+  <link rel="stylesheet" href="<%=path %>/static/js/date-time/bootstrap-datetimepicker.css"/>
 <style type="text/css">
 	
 	#wrap{
@@ -18,105 +19,88 @@
 <!-- BEGIN BODY -->
 <body>
 	<div id="wrap">
-		<form method="post" id="addForm" name="addForm" 
-						action="<spring:url value='/memberAdd.do' htmlEscape='true'/>" target="_self">
+		<form method="post" id="editForm" name="editForm" 
+						action="<spring:url value='/visitRecordEdit.do' htmlEscape='true'/>" target="_self">
+						<input type="hidden" name="id" value="${visitRecord.id }"/>
 			<div class="row">
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
-    					<label for="name">会员姓名</label>
-    					<input type="text" class="form-control" datatype="*" nullmsg="请输入会员姓名" id="name" name="name" placeholder="请输入会员姓名">
+    					<label for="visitorName">来访人</label>
+    					<input type="text" class="form-control"
+    					value="${visitRecord.visitorName }" datatype="s1-10" nullmsg="请输入来访人姓名" id="visitorName" name="visitorName" placeholder="请输入来访人姓名">
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>
-  				
   				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
-    					<label for="mobile">手机号码</label>
-    					<input type="text" class="form-control" datatype="m"
-    					 nullmsg="手机号码必填" errormsg="请填写正确的手机号码" id="mobile" name="mobile" placeholder="请输入手机号码">
+    					<label for="visitedName">被访人</label>
+    					<input type="text" class="form-control"
+    					value="${visitRecord.visitedName }" datatype="s1-10" nullmsg="请输入被访人姓名" id="visitedName" name="visitedName" placeholder="请输入被访人姓名">
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
-  				</div>	
+  				</div>
+			</div>
+			<div class="row">
+  				<div class="col-xs-6 col-md-6">
+  					<div class="form-group">
+    					<label for="visitTime">来访日期</label>
+    					<input id="visitTime" class="form-control" type="text" value="${visitRecord.visitTime }"
+									name="visitTime" value="" placeholder="请输入来访日期" readonly>
+  					</div>
+  				</div>
+  				<div class="col-xs-6 col-md-6">
+  					<div class="form-group">
+    					<label for="leaveTime">离开时间</label>
+    					<input id="leaveTime" class="form-control" type="text" value="${visitRecord.leaveTime }"
+									name="leaveTime" value="" placeholder="请输入离开时间" readonly>
+  					</div>
+  				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-6 col-md-6">
   					<div class="form-group">
-  						<label for="name">会员性别</label>
-  						<div style="height:34px;padding:6px 12px;">
-  							<input type="radio" name="sex" checked value="0"> 男
-  							<input type="radio" name="sex" value="1"> 女
-  						</div>
-  					</div>
-  				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="birthday">出生日期</label>
-    					<input id="birthday" class="form-control" type="text"
-									name="birthday" value="" placeholder="请输入出生日期" readonly>
-  					</div>
-  				</div>
-			</div>
-			<div class="row">
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="email">会员邮箱</label>
-    					<input id="email" class="form-control" type="email" datatype="*0-0|e"
-									name="email" value="" placeholder="请输入会员邮箱">
-						<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
-  					</div>
-  				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="point">会员积分</label>
-    					<input id="point" class="form-control" type="text" datatype="n1-8" nullmsg="请填写积分"
-									name="point" value="0" placeholder="请输入会员积分">
-						<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
-  					</div>
-  				</div>
-			</div>
-			<div class="row">
-  				
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group" >
-    					<label for="memberLevel">会员等级</label>
-    					<select class="form-control" name="memberLevel" id="memberLevel">
-  							<option value="1">普通会员</option>
-  							<option value="2">钻石会员</option>
-  							<option value="3">皇冠会员</option>
-						</select>
-  					</div>
-  				</div>
-  				<div class="col-xs-6 col-md-6">
-  					<div class="form-group">
-    					<label for="address">绑定会员卡</label>
-    					<select class="remote-data form-control" id="cardNum" name="vipcards[0].cardNum">
-  							<option value="" selected="selected">请选择会员卡</option>
-						</select>
+    					<label for="mobile">手机号码</label>
+    					<input type="text" class="form-control" datatype="m" value="${visitRecord.mobile }"
+    					 nullmsg="手机号码必填" errormsg="请填写正确的手机号码" id="mobile" name="mobile" placeholder="请输入手机号码">
+    					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   				</div>	
-  			</div>	
-  			<div class="row">
+  				<div class="col-xs-6 col-md-6">
+  					<div class="form-group">
+    					<label for="idcard">证件号码</label>
+    					<input type="text" class="form-control" datatype="s0-20" value="${visitRecord.idcard }"
+    							id="idcard" name="idcard" placeholder="请输入证件号码">
+    					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+  					</div>
+  				</div>	
+			</div>
+			<div class="row">
   				<div class="col-xs-12 col-md-12">
   					<div class="form-group">
-    					<label for="address">联系地址</label>
-    					<input type="text" class="form-control" id="address" name="address" placeholder="请输入详细地址">
+  						<label for="reason">来访事由</label>
+  						<textarea rows="3" cols="1" class="form-control" datatype="s0-500" name="reason" id="reason" placeholder="请输入来访事由">${visitRecord.reason }</textarea>
   					</div>
-  				</div>	
+  				</div>
   				
-			</div>
+  			</div>	
+  			
 		</form>
 	</div>
 	<!--END MAIN WRAPPER -->
 </body>
 <!-- GLOBAL SCRIPTS -->
 
-<script type="text/javascript"	src="<%=path %>/static/js/date-time/bootstrap-datepicker.js"></script>
+<script type="text/javascript"	src="<%=path %>/static/js/date-time/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript"	src="<%=path %>/static/js/date-time/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
 <script type="text/javascript"	src="<%=path %>/static/js/select2/select2.full.min.js"></script>
 <script type="text/javascript"	src="<%=path %>/static/js/select2/zh-CN.js"></script>
 <iframe name="targetFrame" style="width: 0%; display: none;"></iframe>
 <script type="text/javascript">
-				$('#birthday').datepicker({format:"yyyy-mm-dd"});
+				$('#visitTime').datetimepicker({language:'zh-CN',format:"yyyy-mm-dd",minView: 2,autoClose:2});
+				$('#leaveTime').datetimepicker({language:'zh-CN',format:"hh:ii:ss",startView: 1,autoClose:2,
+					minView: 0,
+					maxView: 1,});
 				var $form = null;
 				$(document).ready(function() {
 					$.ajax({  
@@ -134,7 +118,7 @@
 						},  
 						error:function(){}  
 					}); 
-			 		$form = $('#addForm').Validform({tiptype:function(msg,o,cssctl){
+			 		$form = $('#editForm').Validform({tiptype:function(msg,o,cssctl){
 						//msg：提示信息;
 						//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
 						//cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;

@@ -91,6 +91,8 @@
 				<value>com.sh.manage.entity.Goods</value>
 				<value>com.sh.manage.entity.BuyRecord</value>
 				<value>com.sh.manage.entity.BuyRecordItem</value>
+				<value>com.sh.manage.entity.Recharge</value>
+				<value>com.sh.manage.entity.VisitRecord</value>
 			</list>
 		</property>
 	</bean>

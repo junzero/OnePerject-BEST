@@ -1,6 +1,7 @@
 package com.sh.manage.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,8 +38,8 @@ public class Vipcard implements Serializable{
 	/**
 	 * 余额
 	 */
-	@Column(name="balance", length=20)
-	private String balance;
+	@Column(name="balance")
+	private BigDecimal balance;
 	
 	/**
 	 * 状态
@@ -104,11 +105,11 @@ public class Vipcard implements Serializable{
 		this.cardNum = cardNum;
 	}
 
-	public String getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 
-	public void setBalance(String balance) {
+	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	}
 

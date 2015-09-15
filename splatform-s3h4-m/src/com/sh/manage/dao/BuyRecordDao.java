@@ -57,7 +57,7 @@ public class BuyRecordDao extends AbstractBaseDao<BuyRecord>{
 		}
 		
 		
-		sbf.append(" order by buyTime desc");
+		sbf.append(" order by buyTime desc,id desc");
 		return this.queryList(sbf.toString(), params, pageNo, pageSize);
 	}
 	
