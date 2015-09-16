@@ -1,7 +1,9 @@
 package com.sh.manage.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +37,8 @@ private Logger logger = Logger.getLogger(VisitRecordController.class);
 	@RequestMapping(value = "/visitRecordManager")
 	public ModelAndView visitRecordManagePage(
 			@RequestParam(value = "visitorName", required = false, defaultValue = "") String visitorName,
-			@RequestParam(value = "visitTime", required = false, defaultValue = "") String visitTime,
+			@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+			@RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
 			@RequestParam(value = "pageNo", required = false, defaultValue = "") Integer pageNo) {
 		// 获取会员以及等级
 		if (null == pageNo) {
@@ -44,19 +47,24 @@ private Logger logger = Logger.getLogger(VisitRecordController.class);
 		//返回会员列表页
 		ModelAndView model = new ModelAndView("/visitRecord/visitRecord_manage");
 		model.addObject("visitorName", visitorName);
-		model.addObject("visitTime", visitTime);
+		model.addObject("startDate", startDate);
+		model.addObject("endDate", endDate);
 		// 会员列表
-		page = visitRecordService.findAllVisitRecord(visitorName, visitTime, pageNo, pageSize);
+		page = visitRecordService.findAllVisitRecord(visitorName, startDate, endDate, pageNo, pageSize);
 		List<VisitRecord> visitRecordList = (List<VisitRecord>) page.getList();
 
 		// 翻页带参数
 		if(null!=visitorName){
 			page.addParam("visitorName",""+visitorName);
 		}
-		if(null != visitTime){
-			page.addParam("visitTime",""+visitTime);
+		if(null != startDate){
+			page.addParam("startDate",""+startDate);
 		}
-				
+			
+		if(null != startDate){
+			page.addParam("endDate",""+endDate);
+		}
+			
 		model.addObject("pageSize", pageSize);
 		model.addObject("page", page);
 		model.addObject("visitRecordList", visitRecordList);
@@ -158,6 +166,22 @@ private Logger logger = Logger.getLogger(VisitRecordController.class);
         return new ResponseEntity<String>("<script>parent.callBack('msgdiv','" + msg + "'," + isCorrect + ");parent.close(); parent.location.href='" + WebUtils.formatURI(request, "/visitRecordManager.do")+"'</script>",responseHeaders, HttpStatus.CREATED);
     }
 	
+	@RequestMapping(value="exportExcel")
+	public String exportExcel(@RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+			@RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
+			HttpServletResponse response) {
+		response.setContentType("application/binary;charset=ISO8859_1");
+		try {
+			ServletOutputStream outputStream = response.getOutputStream();
+			String fileName = new String(("来访记录登记表").getBytes(), "ISO8859-1");
+			response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+
+			visitRecordService.exportExcel(startDate, endDate, outputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/** 当前页 */
 	private int initPageNo = 1;

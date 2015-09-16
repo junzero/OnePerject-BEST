@@ -54,12 +54,17 @@
 								<div class="">
 									<i class="icon-hand-right"></i><span>搜索</span> 
 									<input class="form-control" type="text" name="visitorName" value="${visitorName }" placeholder="来访人姓名">
-									<input id="visitTime" class="form-control"
-										type="text" name="visitTime" value="${visitTime }"
-										placeholder="来访日期" readonly="readonly" /> 
-									
+									来访日期<input id="startDate" class="form-control"
+										type="text" name="startDate" value="${startDate }"
+										placeholder="开始日期" readonly="readonly" /> 
+									<input id="endDate" class="form-control"
+										type="text" name="endDate" value="${endDate }"
+										placeholder="结束日期" readonly="readonly" /> 
 									<button class="btn btn-default" type="button" onClick="submitSearchForm()">
-												<i class="icon-search"></i>
+										<i class="icon-search"></i>
+								    </button>
+								    <button class="btn btn-default" type="button" onClick="exportExcel()">
+										<i class="icon-list-alt"></i>导出Excel
 								    </button>
 								</div>
 						
@@ -165,7 +170,8 @@
     <!-- END BODY -->
     <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
     <script type="text/javascript">
-
+    $('#startDate').datepicker({format:"yyyy-mm-dd"});
+    $('#endDate').datepicker({format:"yyyy-mm-dd"});
   	//组织新增
     var addVisitRecord = function(){
     		var diag = new zDialog();
@@ -227,6 +233,11 @@
     		document.getElementById('delForm').submit();diag.close();
     	});
     }
+    
+   	function exportExcel(){
+   		var url = 'exportExcel?startDate='+$('#startDate').val()+'&endDate='+$('#endDate').val();
+        window.location.href=url;
+   	}
     </script>
 
 
