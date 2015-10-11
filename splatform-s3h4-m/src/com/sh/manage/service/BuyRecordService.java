@@ -141,4 +141,8 @@ public class BuyRecordService extends BaseService{
 		old.setItems(items);
 		buyRecordDao.save(old);
 	}
+	
+	public Page findAllByMemberId(Integer memberId, int pageNo, int pageSizes){
+		 return buyRecordDao.getAllByMemberId(memberId, pageNo, pageSizes);
+	}
 }

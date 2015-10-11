@@ -67,5 +67,21 @@ public class RechargeDao extends AbstractBaseDao<Recharge>{
 		sbf.append(" order by createdDate desc,id desc");
 		return this.queryList(sbf.toString(), params, pageNo, pageSize);
 	}
+	
+	public Page getAllByMemberId(Integer memberId,int pageNo,int pageSize){
+		StringBuffer sbf = new StringBuffer();
+		sbf.append("from Recharge where 1=1");
+		
+		Object[] params = new Object[]{};
+		
+		if(memberId != null){
+			params = ArrayUtils.add(params, memberId);
+			sbf.append(" and memberId = ?");
+		}
+		
+		sbf.append("order by createdDate desc");
+		
+		return this.queryList(sbf.toString(), params, pageNo, pageSize);
+	}
 
 }

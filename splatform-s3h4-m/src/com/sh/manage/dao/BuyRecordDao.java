@@ -61,6 +61,20 @@ public class BuyRecordDao extends AbstractBaseDao<BuyRecord>{
 		return this.queryList(sbf.toString(), params, pageNo, pageSize);
 	}
 	
-	
+	public Page getAllByMemberId(Integer memberId, int pageNo, int pageSize){
+		StringBuffer sbf = new StringBuffer();
+		sbf.append("from BuyRecord where 1=1");
+		
+		Object[] params = new Object[]{};
+		
+		if(memberId != null){
+			params = ArrayUtils.add(params, memberId);
+			sbf.append(" and memberId = ?");
+		}
+		
+		sbf.append("order by buyTime desc");
+		
+		return this.queryList(sbf.toString(), params, pageNo, pageSize);
+	}
 
 }

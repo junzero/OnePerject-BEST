@@ -112,4 +112,8 @@ public class RechargeService extends BaseService{
 		oldRecharge.setPoint(recharge.getMoney().intValue());
 		dao.save(oldRecharge);
 	}
+	
+	public Page findAllByMemberId(Integer memberId, int pageNo, int pageSizes){
+		 return dao.getAllByMemberId(memberId, pageNo, pageSizes);
+	}
 }	
