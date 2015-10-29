@@ -121,7 +121,8 @@
 																	<li><a data-toggle="modal" href="#auserEdit" title="编辑会员"
 																onClick="editMember('${member.id}');">编辑</a></li>
 																	<li><a data-toggle="modal" href="#auserDel" title="删除会员"  onClick="delMember('${member.id}','${member.name }');">删除</a></li>
-																	
+																	<li><a title="消费记录" href="#auserEdit" data-target="#modal" onClick="buyRecords('${member.id}','${member.name} ')">消费记录</a></li>
+																	<li><a title="充值记录" href="#auserEdit" data-target="#modal" onClick="recharges('${member.id}','${member.name} ')">充值记录</a></li>
 																</ul>
 															</div>
 														</td>
@@ -183,8 +184,9 @@
         <p>&copy;  splatform-h5 &nbsp;2015 &nbsp;</p>
     </div>
     <!--END FOOTER -->
-
-
+	<div id="modal" class="modal fade" style="width:800px;margin:0 auto;">
+	</div>
+	
     <!-- GLOBAL SCRIPTS -->
     <script src="<%=path%>/static/assets/plugins/jquery-2.0.3.min.js"></script>
     <script src="<%=path%>/static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -201,8 +203,24 @@
     <!-- END BODY -->
     <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
     <script type="text/javascript">
-
-  	//组织新增
+    var buyRecords = function(memberId, memberName){
+    	var diag = new zDialog();
+    	diag.Height =300;
+		diag.Width = 800;
+    	diag.Title = "会员"+memberName+"消费记录";
+    	diag.Top="100";
+    	diag.URL = "<%=path %>/memberBuyRecords.do?memberId="+memberId;
+    	diag.show();
+    };
+    var recharges = function(memberId, memberName){
+    	var diag = new zDialog();
+    	diag.Height =300;
+		diag.Width = 800;
+    	diag.Title = "会员"+memberName+"充值记录";
+    	diag.Top="100";
+    	diag.URL = "<%=path %>/memberRecharges.do?memberId="+memberId;
+    	diag.show();
+    };
     var addmember = function(){
     		var diag = new zDialog();
     		diag.Height =400;

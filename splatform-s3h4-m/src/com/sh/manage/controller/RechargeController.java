@@ -33,6 +33,34 @@ public class RechargeController {
 	private RechargeService rechargeService;
 	
 	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/memberRecharges")
+	public ModelAndView memberBuyRecords(
+			@RequestParam(value = "memberId", required = true) Integer memberId,
+			@RequestParam(value = "pageNo", required = false, defaultValue = "") Integer pageNo) {
+		// 获取会员以及等级
+		if (null == pageNo) {
+			pageNo = initPageNo;
+		}
+		//返回会员列表页
+		ModelAndView model = new ModelAndView("/recharge/memberRecharges");
+		model.addObject("memberId", memberId);
+		// 会员列表
+		page = rechargeService.findAllByMemberId(memberId, pageNo, pageSize);
+		List<Recharge> recharges = (List<Recharge>) page.getList();
+
+		// 翻页带参数
+		
+		if(null != memberId){
+			page.addParam("memberId",""+memberId);
+		}
+				
+		model.addObject("pageSize", pageSize);
+		model.addObject("page", page);
+		model.addObject("recharges", recharges);
+		return model;
+	} 
+	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/rechargeManager")
 	public ModelAndView goodsManagePage(
 			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile,

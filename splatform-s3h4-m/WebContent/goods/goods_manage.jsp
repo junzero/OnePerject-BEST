@@ -81,7 +81,9 @@
 													<th class="center">操作</th>
 													<th>商品名称</th>
 													<th>商品类型</th>
-													<th>商品价格</th>
+													<th>商品原价</th>
+													<th>商品折扣</th>
+													<th>折后价</th>
 													<th>商品描述</th>
 												</tr>
 											</thead>
@@ -108,6 +110,8 @@
 														<td>${goods.name}</td>
 														<td><c:if test="${goods.type eq '1'}">产品</c:if>
 															<c:if test="${goods.type eq '2'}">服务</c:if></td>
+															<td>${goods.originalPrice}</td>
+															<td>${goods.discount}</td>
 														<td>${goods.price}</td>
 														<td>${goods.description}</td>
 													</tr>

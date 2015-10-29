@@ -31,9 +31,44 @@ public class BuyRecordController {
 	@Autowired
 	private BuyRecordService buyRecordService;
 	
+	@RequestMapping(value = "/recordDetail")
+	public ModelAndView recordDetail(@RequestParam(value = "recordId", required = true) Integer recordId){
+		ModelAndView model = new ModelAndView("/buyRecord/recordDetail");
+		model.addObject("record", buyRecordService.getById(recordId));
+		return model;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/memberBuyRecords")
+	public ModelAndView memberBuyRecords(
+			@RequestParam(value = "memberId", required = true) Integer memberId,
+			@RequestParam(value = "pageNo", required = false, defaultValue = "") Integer pageNo) {
+		// 获取会员以及等级
+		if (null == pageNo) {
+			pageNo = initPageNo;
+		}
+		//返回会员列表页
+		ModelAndView model = new ModelAndView("/buyRecord/memberBuyRecord");
+		model.addObject("memberId", memberId);
+		// 会员列表
+		page = buyRecordService.findAllByMemberId(memberId, pageNo, pageSize);
+		List<BuyRecord> buyRecords = (List<BuyRecord>) page.getList();
+
+		// 翻页带参数
+		
+		if(null != memberId){
+			page.addParam("memberId",""+memberId);
+		}
+				
+		model.addObject("pageSize", pageSize);
+		model.addObject("page", page);
+		model.addObject("buyRecords", buyRecords);
+		return model;
+	} 
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/buyRecordManager")
-	public ModelAndView goodsManagePage(
+	public ModelAndView buyRecordManagePage(
 			@RequestParam(value = "cardNum", required = false, defaultValue = "") String cardNum,
 			@RequestParam(value = "pageNo", required = false, defaultValue = "") Integer pageNo) {
 		// 获取会员以及等级

@@ -39,6 +39,8 @@ public class GoodsService extends BaseService{
 			oldGoods.setType(goods.getType());
 			oldGoods.setPrice(goods.getPrice());
 			oldGoods.setDescription(goods.getDescription());
+			oldGoods.setDiscount(goods.getDiscount());
+			oldGoods.setOriginalPrice(goods.getOriginalPrice());
 			goodsDao.update(oldGoods);
 		}
 	}

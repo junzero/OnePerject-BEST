@@ -44,6 +44,18 @@ public class Goods implements Serializable{
 	@Column(name = "description" )
 	private String description;
 	
+	/**
+	 * 原价
+	 */
+	@Column(name="original_price")
+	private BigDecimal originalPrice;
+	
+	/**
+	 * 折扣
+	 */
+	@Column(name="discount")
+	private BigDecimal discount;
+	
 	@Column(name="price")
 	private BigDecimal price;
 	
@@ -89,7 +101,22 @@ public class Goods implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
+	public BigDecimal getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(BigDecimal originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
 	
 	
 }	

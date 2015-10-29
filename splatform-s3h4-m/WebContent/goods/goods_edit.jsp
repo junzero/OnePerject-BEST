@@ -28,9 +28,21 @@
 						<div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   					<div class="form-group">
+    					<label for="balance">商品原价</label>
+    					<input type="text" class="form-control" id="originalPrice" name="originalPrice" datatype="/^[0-9]+(\.[0-9]{1,2})?$/i" nullmsg="商品原价必填" errormsg="请输入正确的金额"
+    					 value="${goods.originalPrice}" oninput="countPrice(this,this.value);" placeholder="请输入商品原价">
+    					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+  					</div>
+  					<div class="form-group">
+    					<label for="balance">商品折扣</label>
+    					<input type="text" class="form-control" id="discount" name="discount" datatype="/^[1-9](\.\d)|10.0$/i" nullmsg="商品原价必填" errormsg="请输入正确的折扣"
+    					 value="${goods.discount}" oninput="countPrice(this,this.value);" placeholder="请输入折扣(如8.8折，1-10以内一位小数)">
+    					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+  					</div>
+  					<div class="form-group">
     					<label for="price">商品价格</label>
     					<input type="text" class="form-control" id="price" name="price" datatype="/^[0-9]+(\.[0-9]{1,2})?$/i" nullmsg="商品名称价格必填" errormsg="请输入正确的金额"
-    					 value="${goods.price} " placeholder="请输入商品价格">
+    					 value="${goods.price} " readonly="readonly" placeholder="请输入商品价格">
     					<div class="info"><span class="Validform_checktip Validform_wrong"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
   					</div>
   					<div class="form-group" >
@@ -60,7 +72,29 @@
 <iframe name="targetFrame" style="width: 0%; display: none;"></iframe>
 <script type="text/javascript">
 		
-				
+function countPrice(obj,val){
+	var rePrice = /^[0-9]+(\.[0-9]{1,2})?$/i;
+	var reDiscount = /^[1-9](\.\d)?|10.0$/i;
+	if($(obj).attr("name") == "discount"){
+		if(reDiscount.test(val)){
+			if(rePrice.test($("#originalPrice").val())){
+				var price = val*$("#originalPrice").val()/10;
+				$("#price").val( Math.round(price*100)/100);
+			}
+		}else{
+			//alert($(obj).attr("errormsg"));
+		}
+	}else{
+		if(rePrice.test(val)){
+			if(reDiscount.test($("#discount").val())){
+				var price = val*$("#discount").val()/10;
+				$("#price").val(Math.round(price*100)/100);
+			}
+		}else{
+			//alert($(obj).attr("errormsg"));
+		}
+	}
+}
 				var $form = null;
 				$(document).ready(function() {
 					
