@@ -95,7 +95,7 @@
 																	<li><a data-toggle="modal" href="#auserEdit" title="编辑会员卡"
 																		onClick="editrecord('${record.id}');">编辑</a></li>
 																	<li><a data-toggle="modal" href="#auserDel" title="删除会员卡"  onClick="delrecord('${record.id}');">删除</a></li>
-																	
+																	<li><a data-toggle="modal" href="#auserDel" title="消费详情"  onClick="recordDetail('${record.id}','${record.buyTime}');">消费详情</a></li>
 																</ul>
 															</div>
 														</td>
@@ -157,7 +157,14 @@
     <!-- END BODY -->
     <script type="text/javascript"	src="<%=path %>/static/js/Validform_v5.3.2.js"></script>
     <script type="text/javascript">
-
+    var recordDetail = function(recordId, date){
+    	var diag = new zDialog();
+    	diag.Height =400;
+		diag.Width = 400;
+    	diag.Title = "消费详情";
+    	diag.URL = "<%=path %>/recordDetail.do?recordId="+recordId;
+    	diag.show();
+    };
     var addrecord = function(){
     		var diag = new zDialog();
     		diag.Height = 360;
