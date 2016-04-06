@@ -428,7 +428,7 @@ CREATE TABLE `t_member` (
 
 
 -- ----------------------------
--- Records of t_sys_menu
+-- Records of t_member
 -- ----------------------------
 INSERT INTO `t_member` VALUES (1, 'zjyww', 'zjy9044@163.com', '2015-8-7', '0', '18059008864', NULL, NULL, NULL, NULL, '', NULL, '1', 0, NULL, '2015-08-30');
 INSERT INTO `t_member` VALUES (2, '吴佳俊', 'zjyww@163.com', '1990-3-30', '0', '18059008843', NULL, NULL, NULL, NULL, '发广告', NULL, '2', 0, '2', '2015-08-30');
