@@ -183,24 +183,26 @@ CREATE TABLE `t_sys_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of t_sys_menu
--- ----------------------------
---INSERT INTO `t_sys_menu` VALUES ('2', '系统管理', 'sys_menu', '0', '', '0', '', 'icon-tasks', '1');
---INSERT INTO `t_sys_menu` VALUES ('3', '参数设置', 'params_menu', '2', 'gmanage.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('4', '组织管理', 'group_menu', '2', 'gmanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', null, '0');
---INSERT INTO `t_sys_menu` VALUES ('5', '角色管理', 'role_menu', '2', 'romanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', null, '0');
---INSERT INTO `t_sys_menu` VALUES ('6', '用户管理', 'user_menu', '2', 'umanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', null, '0');
---INSERT INTO `t_sys_menu` VALUES ('7', '会员管理', 'auser_menu', '2', 'aumanage.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('8', '课程管理', 'course_menu', '0', '', '0', null, 'icon-table', '1');
---INSERT INTO `t_sys_menu` VALUES ('9', '课程列表', 'courseslist_menu', '8', 'coursemanage.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('10', '商品管理', 'goods_menu', '0', null, '0', null, 'icon-keyboard', '1');
---INSERT INTO `t_sys_menu` VALUES ('11', '商品列表', 'goodslist_menu', '10', '/goods/list.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('12', '商品审核', 'goodsaudit_menu', '10', '/goods/toAuditList.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('13', '商品报表', 'goodsreport_menu', '10', '/goods/toReportList.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('16', '订单管理', 'order_menu', '0', null, '0', null, 'icon-exchange', '1');
---INSERT INTO `t_sys_menu` VALUES ('17', '订单审核', 'order_audit', '16', '/order/oaudit.do', '1', null, null, '0');
---INSERT INTO `t_sys_menu` VALUES ('18', '订单报表', 'order_export', '16', '/order/export.do', '1', null, null, '0');
+
+INSERT INTO `t_sys_menu` VALUES ('2', '系统管理', 'sys_menu', '0', '', '0', '', 'icon-tasks', '1');
+
+INSERT INTO `t_sys_menu` VALUES ('3', '参数设置', 'params_menu', '2', 'gmanage.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('4', '组织管理', 'group_menu', '2', 'gmanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('5', '角色管理', 'role_menu', '2', 'romanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('6', '用户管理', 'user_menu', '2', 'umanage.do', '1', 'add_btn,edit_btn,del_btn,audit_btn', NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('7', '会员管理', 'auser_menu', '2', 'aumanage.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('8', '会员管理', 'member_menu', '0', '','0', NULL, 'icon-heart-empty', '1');
+INSERT INTO `t_sys_menu` VALUES ('9', '会员列表', 'memberlist_menu', '8', 'memberManager.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('10', '商品管理', 'goods_menu', '0', NULL, '0', NULL, 'icon-keyboard', '1');
+INSERT INTO `t_sys_menu` VALUES ('11', '商品列表', 'goodslist_menu', '10', '/goodsManager.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('12', '消费记录', 'goodsaudit_menu', '10', '/buyRecordManager.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('13', '商品报表', 'goodsreport_menu', '10', '/goods/toReportList.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('16', '订单管理', 'order_menu', '0', NULL, '0', NULL, 'icon-exchange', '1');
+INSERT INTO `t_sys_menu` VALUES ('17', '订单审核', 'order_audit', '16', '/order/oaudit.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('18', '订单报表', 'order_export', '16', '/order/export.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('19', '会员卡管理', 'vipcard_menu', '8', 'vipcardManager.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('20', '充值记录', 'recharge_menu', '8', 'rechargeManager.do', '1', NULL, NULL, '0');
+INSERT INTO `t_sys_menu` VALUES ('21', '来访记录', 'visitRecord_menu', '2', 'visitRecordManager.do', '1', NULL, NULL, '0');
 
 -- ----------------------------
 -- Table structure for `t_sys_operate`
@@ -374,64 +376,6 @@ INSERT INTO `t_sys_user_role` VALUES ('35', '1', '1');
 INSERT INTO `t_sys_user_role` VALUES ('36', '2', '1');
 INSERT INTO `t_sys_user_role` VALUES ('37', '9', '2');
 
--- ----------------------------
--- Records of t_sys_menu
--- ----------------------------
-INSERT INTO `t_sys_menu` VALUES (2, '系统管理', 'sys_menu', 0, '', 0, '', 'icon-tasks', 1);
-INSERT INTO `t_sys_menu` VALUES (3, '参数设置', 'params_menu', 2, 'gmanage.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (4, '组织管理', 'group_menu', 2, 'gmanage.do', 1, 'add_btn,edit_btn,del_btn,audit_btn', NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (5, '角色管理', 'role_menu', 2, 'romanage.do', 1, 'add_btn,edit_btn,del_btn,audit_btn', NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (6, '用户管理', 'user_menu', 2, 'umanage.do', 1, 'add_btn,edit_btn,del_btn,audit_btn', NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (7, '会员管理', 'auser_menu', 2, 'aumanage.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (8, '会员管理', 'member_menu', 0, '', 0, NULL, 'icon-heart-empty', 1);
-INSERT INTO `t_sys_menu` VALUES (9, '会员列表', 'memberlist_menu', 8, 'memberManager.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (10, '商品管理', 'goods_menu', 0, NULL, 0, NULL, 'icon-keyboard', 1);
-INSERT INTO `t_sys_menu` VALUES (11, '商品列表', 'goodslist_menu', 10, '/goodsManager.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (12, '消费记录', 'goodsaudit_menu', 10, '/buyRecordManager.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (13, '商品报表', 'goodsreport_menu', 10, '/goods/toReportList.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (16, '订单管理', 'order_menu', 0, NULL, 0, NULL, 'icon-exchange', 1);
-INSERT INTO `t_sys_menu` VALUES (17, '订单审核', 'order_audit', 16, '/order/oaudit.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (18, '订单报表', 'order_export', 16, '/order/export.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (19, '会员卡管理', 'vipcard_menu', 8, 'vipcardManager.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (20, '充值记录', 'recharge_menu', 8, 'rechargeManager.do', 1, NULL, NULL, 0);
-INSERT INTO `t_sys_menu` VALUES (21, '来访记录', 'visitRecord_menu', 2, 'visitRecordManager.do', 1, NULL, NULL, 0);
-
--- ----------------------------
--- Table structure for t_member
--- ----------------------------
-DROP TABLE IF EXISTS `t_member`;
-CREATE TABLE `t_member` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '会员姓名',
-  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电子邮件',
-  `birthday` date DEFAULT NULL COMMENT '生日',
-  `sex` varchar(1) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '性别',
-  `mobile` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '手机号码',
-  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '头像',
-  `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '固话',
-  `province` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '省',
-  `city` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '市',
-  `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '地址',
-  `group_id` int(8) DEFAULT NULL,
-  `card_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '会员卡号',
-  `card_created` date DEFAULT NULL COMMENT '办卡日期',
-  `card_deadline` date DEFAULT NULL COMMENT '会员卡截止日期',
-  `card_password` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '卡密码',
-  `member_level` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '会员等级',
-  `point` int(8) DEFAULT NULL COMMENT '积分',
-  `balance` decimal(10,0) DEFAULT NULL COMMENT '余额',
-  `status` varchar(1) COLLATE utf8_unicode_ci NOT NULL COMMENT '会员状态',
-  `created` date NOT NULL,
-  `create_user` int(8) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- ----------------------------
--- Records of t_member
--- ----------------------------
-INSERT INTO `t_member` VALUES (1, 'zjyww', 'zjy9044@163.com', '2015-8-7', '0', '18059008864', NULL, NULL, NULL, NULL, '', NULL, '1', 0, NULL, '2015-08-30');
-INSERT INTO `t_member` VALUES (2, '吴佳俊', 'zjyww@163.com', '1990-3-30', '0', '18059008843', NULL, NULL, NULL, NULL, '发广告', NULL, '2', 0, '2', '2015-08-30');
-INSERT INTO `t_member` VALUES (3, 'zhangsan', '', NULL, '0', '13559464748', NULL, NULL, NULL, NULL, '福州鼓楼区', NULL, '1', 0, NULL, '2015-09-11 14:28:27');
-INSERT INTO `t_member` VALUES (4, '李四', '', NULL, '0', '15090909090', NULL, NULL, NULL, NULL, '福州苍山去', NULL, '1', 0, NULL, '2015-09-11 14:30:12');
 
